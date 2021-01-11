@@ -1,0 +1,118 @@
+<?php
+require_once "ICS/ICSloader.php";
+use Jsvrcek\ICS\Model\Calendar;
+use Jsvrcek\ICS\Model\CalendarEvent;
+use Jsvrcek\ICS\Utility\Formatter;
+use Jsvrcek\ICS\CalendarStream;
+use Jsvrcek\ICS\CalendarExport;
+
+# haal alle afspraken met een bepaalde status op
+function afspraakAssoc(PDO $conn, int $status){
+    $statement = $conn->prepare("SELECT * FROM afspraken WHERE status=:status");
+    $statement->execute([":status" => $status]);
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+# wordt in de admin-interface gebruikt voor de pending afspraken
+function quickAfspraakHTML($af){
+    $afHTML = "<div class='afspraak' id='{$af['id']}'>";
+    if (isset($af['email'])) {
+        $afHTML .= "<a class='afspraak-email'>{$af['email']}</a>";
+    }
+    if (isset($af['start']) && isset($af['end'])) {
+        $startStr = date("H:i", $af['start']);
+        $endStr = date("H:i", $af['end']);
+        $afHTML .= "<p class='afspraak-tijd'>{$startStr} - {$endStr}</p>";
+    }
+    $afHTML .= "<input type='button' class='afspraak-accept' value='accepteren'>
+                <input type='button' class='afspraak-deny' value='weigeren'>
+                </div>";
+    return $afHTML;
+}
+# recursive zodat je niet een id kan krijgen dat al bestaat
+function createTrackId(PDO $connection) {
+    $characters = 'abcdefghijklmnopqrstuvwxyz';
+    $randomId = '';
+    for ($i = 0; $i < 6; $i++) {
+        $index = rand(0, strlen($characters) - 1);
+        $randomId .= $characters[$index];
+    }
+    $result = $connection->query("SELECT * FROM afspraken WHERE tracker_id='{$randomId}'");
+    if ($result != FALSE) return $randomId; # to-do: testen of dit überhaupt werkt
+    else return createTrackId($connection);
+}
+
+function getByTrackId($id, PDO $connection) {
+    $statement = $connection->prepare("SELECT * FROM afspraken WHERE tracker_id=:trackId");
+    $statement->execute([':trackId' => $id]);
+    if ($statement->rowCount() == 1) {
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+    else return false;
+}
+# alles nodig om een afspraak aan de database toe te voegen in één functie!
+function addAfspraak($af, PDO $connection) {
+    $behandelingenRes = $af['behandelingen'];
+    $behandelLength = 0;
+    $start = $af['selectedTime'];
+    foreach ($behandelingenRes as $behandelId) {
+        $behandelId = intval($behandelId);
+        $behandelData = $connection->query("SELECT * FROM behandelingen WHERE id={$behandelId}")
+            ->fetchAll(PDO::FETCH_ASSOC)[0];
+        if (!empty($behandelData['length'])) $behandelLength += intval($behandelData['length']);
+    }
+    $end = $start + $behandelLength * 60;
+
+    # een manier om meerdere id's in één cell te doen gezien mySQL geen arrays heeft
+    # arr(2, 5, 7) wordt "2_5_7"
+    $behandelStr = implode('_', $behandelingenRes);
+    $email = $af['e-mail'];
+    $tracking = createTrackId($connection);
+
+    $tel = filter_var($af['phone'], FILTER_SANITIZE_NUMBER_INT);
+    $tel = str_replace("-", "", $tel);
+    $tel = str_replace("+", "", $tel);
+
+    $statement = $connection->prepare("INSERT INTO afspraken 
+    VALUES (NULL, :start, :end, :b_id, :tr_id, :email, :tel, 0);");
+    $result = $statement->execute([
+        ':start' => $start,
+        ':end' => $end,
+        ':b_id' => $behandelStr,
+        ':tr_id' => $tracking,
+        ':email' => $email,
+        ':tel' => $tel,
+    ]);
+    return $tracking;
+}
+# maak een ICS-bestand aan op basis van een afspraak
+# wordt opgeslagen in Includes/private/data/{tracker_id}.ics
+# https://github.com/jasvrcek/ICS gebruikt
+function createAfspraakICS($conn, $af){
+    $start = new DateTime();
+    $start->setTimestamp($af[0]['start']);
+    $end = new DateTime();
+    $end->setTimestamp($af[0]['end']);
+    $behandelingen = getBehandelingen($conn, $af[0]['behandel_id'], 'name');
+    $desc = implode(', ', $behandelingen);
+
+    $eventOne = new CalendarEvent();
+    $eventOne->setStart($start)
+        ->setEnd($end)
+        ->setDescription($desc)
+        ->setSummary('Afspraak Surely Beauty')
+        ->setUid('event-uid');
+
+    $calendar = new Calendar();
+    $calendar->setProdId('//Surely Beauty//Afspraken//NL')
+    ->addEvent($eventOne);
+
+    $calendarExport = new CalendarExport(new CalendarStream, new Formatter());
+    $calendarExport->addCalendar($calendar);
+
+    $ICSurl = "Includes/private/data/{$af[0]['tracker_id']}.ics";
+    $trackFile = fopen($ICSurl, 'w') or die("unable to open file");
+    fwrite($trackFile, $calendarExport->getStream());
+    fclose($trackFile);
+
+    return $ICSurl;
+}
