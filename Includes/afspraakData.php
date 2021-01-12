@@ -89,10 +89,10 @@ function addAfspraak($af, PDO $connection) {
 # https://github.com/jasvrcek/ICS gebruikt
 function createAfspraakICS($conn, $af){
     $start = new DateTime();
-    $start->setTimestamp($af[0]['start']);
+    $start->setTimestamp($af['start']);
     $end = new DateTime();
-    $end->setTimestamp($af[0]['end']);
-    $behandelingen = getBehandelingen($conn, $af[0]['behandel_id'], 'name');
+    $end->setTimestamp($af['end']);
+    $behandelingen = getBehandelingen($conn, $af['behandel_id'], 'name');
     $desc = implode(', ', $behandelingen);
 
     $eventOne = new CalendarEvent();
@@ -109,10 +109,21 @@ function createAfspraakICS($conn, $af){
     $calendarExport = new CalendarExport(new CalendarStream, new Formatter());
     $calendarExport->addCalendar($calendar);
 
-    $ICSurl = "Includes/private/data/{$af[0]['tracker_id']}.ics";
+    $ICSurl = "Includes/private/data/{$af['tracker_id']}.ics";
     $trackFile = fopen($ICSurl, 'w') or die("unable to open file");
     fwrite($trackFile, $calendarExport->getStream());
     fclose($trackFile);
 
     return $ICSurl;
+}
+
+function getStatus($stat) {
+    switch($stat) {
+        case 1:
+            return "Geaccepteerd";
+        case 2:
+            return "Afgewezen";
+        default:
+            return "In Afwachting";
+    }
 }

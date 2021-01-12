@@ -26,7 +26,7 @@ function getBehandeling(PDO $conn, $id, $sel = false) {
     else return $result;
 }
 # voer getBehandeling() uit op een string zoals deze in de database staat ("1_3_22")
-function getBehandelingen(PDO $conn, $idStr, $sel) {
+function getBehandelingen(PDO $conn, $idStr, $sel = false) {
     $ids = explode('_', $idStr);
     $returnArr = [];
     foreach($ids as $id) {

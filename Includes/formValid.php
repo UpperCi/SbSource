@@ -24,7 +24,7 @@ function validateAfspraak($res) {
     }
     else {
         foreach ($res['behandelingen'] as $key => $behandeling) {
-            $res['behandelingen'][$key] = intval($behandeling);
+            $res['behandelingen'][$key] = min(intval($behandeling), 9999);
         }
     }
 
