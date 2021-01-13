@@ -6,7 +6,12 @@
 
 // valideert van een afspraak de tijden, behandelingen, email en telefoonnummer
 // returnt assoc-arr met errors
-function validateAfspraak($res) {
+/**
+ * @param ArrayObject $res
+ * @return array
+ */
+function validateAfspraak(ArrayObject $res): array
+{
     $errs = [];
 
     if (empty($res['selectedTime']) || !isset($res['selectedTime'])) {
@@ -47,7 +52,13 @@ function validateAfspraak($res) {
 }
 // indien $arr het attribuut $i bevat, geeft dat terug. Geef anders een lege string
 // makkelijk om arrays direct uit te printen zonder steeds isset() te moeten roepen
-function arrIfSet($arr, $i) {
+/**
+ * @param $arr
+ * @param $i
+ * @return string
+ */
+function arrIfSet($arr, $i): string
+{
     if (isset($arr[$i])) return $arr[$i];
     else return "";
 }

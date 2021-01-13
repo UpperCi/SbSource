@@ -47,7 +47,7 @@ $ICSurl = createAfspraakICS($connection, $info);
             </div>
         </div>
         <div id="afspraak-download">
-            <a href="<?= $ICSurl ?>"><i class="far fa-calendar-alt"></i> Download</a>
+            <a href="<?= $ICSurl ?>"><i class="far fa-calendar-alt"></i> Zet in Agenda</a>
         </div>
     </div>
 </main>

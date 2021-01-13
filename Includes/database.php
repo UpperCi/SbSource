@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @param $host
+ * @param $user
+ * @param $pass
+ * @param $dbname
+ * @return PDO
+ */
 function connectDatabase($host, $user, $pass, $dbname) : \PDO
 {
     try {

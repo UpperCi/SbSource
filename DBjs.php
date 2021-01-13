@@ -14,7 +14,7 @@ function returnIfValid($connection, $query) {
 }
 
 /* type queries
- * 0 -> haal afspraken op [admin]
+ * 0 -> haal afspraken op per dag
  * 1 -> haal behandelingen op
  * 2 -> haal openingstijden specifieke dag op | d = date-string
  * 3 -> haal per dag van maand op of SB die dag open is | d = date-string
@@ -25,8 +25,20 @@ function returnIfValid($connection, $query) {
 if (isset($_GET['t'])){
     switch ($_GET['t']) {
         case 0: // haal afspraken op
-            if (checkLogin($_GET)) {
-                echo json_encode(returnIfValid($connection, "SELECT * FROM afspraken"));
+            if (checkLogin($connection, $_GET)) {
+                $startTime = strtotime($_GET['d']);
+                if (!is_integer($startTime)) break;
+                $endTime = $startTime + 86400;
+
+                $statement = $connection->prepare
+                ("SELECT * FROM afspraken WHERE start > :start AND end < :end");
+                $statement->execute([
+                    ':start' => $startTime,
+                    ':end' => $endTime
+                ]);
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                echo json_encode($result);
+                break;
             }
             break;
         case 1:

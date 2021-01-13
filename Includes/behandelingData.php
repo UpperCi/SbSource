@@ -1,6 +1,10 @@
 <?php
 
 # geef html terug om een behandeling direct uit te echo-en
+/**
+ * @param PDO $conn
+ * @return array
+ */
 function behandelAssoc(PDO $conn) {
     $behandelAssoc = [];
     $cats = $conn->query("SELECT id, name FROM categorieen ORDER BY display_order")->
@@ -16,6 +20,12 @@ function behandelAssoc(PDO $conn) {
     return $behandelAssoc;
 }
 # return assoc-array of één waarde van behandeling op basis van ID
+/**
+ * @param PDO $conn
+ * @param $id
+ * @param false $sel
+ * @return mixed
+ */
 function getBehandeling(PDO $conn, $id, $sel = false) {
     $statement = $conn->prepare("SELECT * FROM behandelingen WHERE id=:id");
     $statement->execute([':id' => $id]);
@@ -26,6 +36,12 @@ function getBehandeling(PDO $conn, $id, $sel = false) {
     else return $result;
 }
 # voer getBehandeling() uit op een string zoals deze in de database staat ("1_3_22")
+/**
+ * @param PDO $conn
+ * @param $idStr
+ * @param false $sel
+ * @return array
+ */
 function getBehandelingen(PDO $conn, $idStr, $sel = false) {
     $ids = explode('_', $idStr);
     $returnArr = [];
@@ -35,6 +51,10 @@ function getBehandelingen(PDO $conn, $idStr, $sel = false) {
     return $returnArr;
 }
 # html van een behandel-assoc-array om direct te echoën
+/**
+ * @param $b
+ * @return string
+ */
 function behandelHTML($b) {
     $bhtml = "<div> <h2 class='naam'>{$b['name']}</h2>";
     if (isset($b['length'])) {

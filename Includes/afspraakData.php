@@ -1,5 +1,7 @@
 <?php
 require_once "ICS/ICSloader.php";
+
+use Jsvrcek\ICS\Exception\CalendarEventException;
 use Jsvrcek\ICS\Model\Calendar;
 use Jsvrcek\ICS\Model\CalendarEvent;
 use Jsvrcek\ICS\Utility\Formatter;
@@ -7,13 +9,24 @@ use Jsvrcek\ICS\CalendarStream;
 use Jsvrcek\ICS\CalendarExport;
 
 # haal alle afspraken met een bepaalde status op
-function afspraakAssoc(PDO $conn, int $status){
+/**
+ * @param PDO $conn
+ * @param int $status
+ * @return array
+ */
+function afspraakAssoc(PDO $conn, int $status): array
+{
     $statement = $conn->prepare("SELECT * FROM afspraken WHERE status=:status");
     $statement->execute([":status" => $status]);
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 # wordt in de admin-interface gebruikt voor de pending afspraken
-function quickAfspraakHTML($af){
+/**
+ * @param $af
+ * @return string
+ */
+function quickAfspraakHTML($af): string
+{
     $afHTML = "<div class='afspraak' id='{$af['id']}'>";
     if (isset($af['email'])) {
         $afHTML .= "<a class='afspraak-email'>{$af['email']}</a>";
@@ -29,7 +42,12 @@ function quickAfspraakHTML($af){
     return $afHTML;
 }
 # recursive zodat je niet een id kan krijgen dat al bestaat
-function createTrackId(PDO $connection) {
+/**
+ * @param PDO $connection
+ * @return string
+ */
+function createTrackId(PDO $connection): string
+{
     $characters = 'abcdefghijklmnopqrstuvwxyz';
     $randomId = '';
     for ($i = 0; $i < 6; $i++) {
@@ -41,6 +59,11 @@ function createTrackId(PDO $connection) {
     else return createTrackId($connection);
 }
 
+/**
+ * @param $id
+ * @param PDO $connection
+ * @return array|false
+ */
 function getByTrackId($id, PDO $connection) {
     $statement = $connection->prepare("SELECT * FROM afspraken WHERE tracker_id=:trackId");
     $statement->execute([':trackId' => $id]);
@@ -50,7 +73,13 @@ function getByTrackId($id, PDO $connection) {
     else return false;
 }
 # alles nodig om een afspraak aan de database toe te voegen in één functie!
-function addAfspraak($af, PDO $connection) {
+/**
+ * @param $af
+ * @param PDO $connection
+ * @return string
+ */
+function addAfspraak($af, PDO $connection): string
+{
     $behandelingenRes = $af['behandelingen'];
     $behandelLength = 0;
     $start = $af['selectedTime'];
@@ -87,7 +116,14 @@ function addAfspraak($af, PDO $connection) {
 # maak een ICS-bestand aan op basis van een afspraak
 # wordt opgeslagen in Includes/private/data/{tracker_id}.ics
 # https://github.com/jasvrcek/ICS gebruikt
-function createAfspraakICS($conn, $af){
+/**
+ * @param $conn
+ * @param $af
+ * @return string
+ * @throws CalendarEventException
+ */
+function createAfspraakICS($conn, $af): string
+{
     $start = new DateTime();
     $start->setTimestamp($af['start']);
     $end = new DateTime();
@@ -117,7 +153,12 @@ function createAfspraakICS($conn, $af){
     return $ICSurl;
 }
 
-function getStatus($stat) {
+/**
+ * @param $stat
+ * @return string
+ */
+function getStatus($stat): string
+{
     switch($stat) {
         case 1:
             return "Geaccepteerd";

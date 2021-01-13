@@ -10,7 +10,15 @@
   <component name="ChangeListManager">
     <list default="true" id="7177112e-2f3e-49a9-9577-88fd84abe3d4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DBjs.php" beforeDir="false" afterPath="$PROJECT_DIR$/DBjs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Includes/afspraakData.php" beforeDir="false" afterPath="$PROJECT_DIR$/Includes/afspraakData.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Includes/behandelingData.php" beforeDir="false" afterPath="$PROJECT_DIR$/Includes/behandelingData.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Includes/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/Includes/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Includes/formValid.php" beforeDir="false" afterPath="$PROJECT_DIR$/Includes/formValid.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Includes/init.php" beforeDir="false" afterPath="$PROJECT_DIR$/Includes/init.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Includes/settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/Includes/settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/afspraakTracker.php" beforeDir="false" afterPath="$PROJECT_DIR$/afspraakTracker.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/tracker.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/tracker.css" afterDir="false" />
     </list>
     <list id="fae9cdcb-3c1f-4157-819e-ee26e559fb4c" name="Full" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,6 +53,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
@@ -63,8 +76,23 @@
       <workItem from="1608209126475" duration="2210000" />
       <workItem from="1608297291340" duration="885000" />
       <workItem from="1610351515597" duration="1407000" />
-      <workItem from="1610352931557" duration="517000" />
+      <workItem from="1610352931557" duration="5843000" />
+      <workItem from="1610440356414" duration="9400000" />
+      <workItem from="1610464205050" duration="337000" />
+      <workItem from="1610467054979" duration="2224000" />
+      <workItem from="1610522645049" duration="37000" />
+      <workItem from="1610522702109" duration="13000" />
+      <workItem from="1610522759765" duration="7000" />
+      <workItem from="1610531779972" duration="2003000" />
     </task>
+    <task id="LOCAL-00001" summary="afspraakTracker.php update">
+      <created>1610462125337</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1610462125337</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,6 +137,10 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="afspraakTracker.php update" />
+    <option name="LAST_COMMIT_MESSAGE" value="afspraakTracker.php update" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="184" y="86" key="DiffContextDialog" timestamp="1610352142130">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -130,14 +162,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="790" y="389" key="VCS.EditChangelistDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1610351615857" />
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1610352704856">
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2" timestamp="1610462140068">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="249" key="Vcs.Push.Dialog.v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1610352704856" />
+    <state x="552" y="249" key="Vcs.Push.Dialog.v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1610462140068" />
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1608298176883">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1608298176883" />
+    <state x="777" y="430" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1610532774536">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="777" y="430" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1610532774536" />
     <state x="845" y="170" key="ftp.server.browser" timestamp="1610351860849">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
