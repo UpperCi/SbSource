@@ -27,17 +27,13 @@ function previous() {
     changeCalendar(currentMonth, currentYear);
 }
 
-function changeCalendar(month, year) {
+async function changeCalendar(month, year) {
     let date = `1-${month+1}-${year}`;
+    let url = `DBjs.php?t=3&d=${date}`;
 
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            renderCalendar(month, year, JSON.parse(this.responseText));
-        }
-    };
-    request.open("GET", `DBjs.php?t=3&d=${date}`, true);
-    request.send();
+    await fetch(url)
+        .then(response => response.json())
+        .then(data => renderCalendar(month, year, data));
 }
 // gooi table met rijen, kolommen als weken, weekdagen in #kalender-body op basis van maand en jaar
 // grotendeels van het artikel bovenaan gecomment
@@ -101,17 +97,13 @@ function daysInMonth(iMonth, iYear)
     return 32 - tempDate;
 }
 
-function getDate(year, month, day) {
+async function getDate(year, month, day) {
     let date = `${day}-${month}-${year}`;
+    let url = `DBjs.php?t=2&d=${date}`;
 
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            upDate(JSON.parse(this.responseText));
-        }
-    };
-    request.open("GET", `DBjs.php?t=2&d=${date}`, true);
-    request.send();
+    await fetch(url)
+        .then(response => response.json())
+        .then(data => upDate(data));
 }
 
 // func(cell, row) wordt op elke geldige cel van de kalender uitgevoerd

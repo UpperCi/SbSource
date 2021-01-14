@@ -164,8 +164,6 @@ function createAfLink(afObj) {
     details.setAttribute('href',url);
     afLink.appendChild(details);
 
-    console.log(afObj);
-
     document.getElementById('afspraken').appendChild(afLink);
 }
 
@@ -178,17 +176,30 @@ function updateAfspraken(af) {
     }
 }
 
+async function updateAfspraakData(year, month, day) {
+    let date = `${day}-${month}-${year}`;
+    let url = `DBjs.php?t=0&d=${date}&user=${USER}&pass=${PASS}`;
+
+    await fetch(url)
+        .then(response => response.json())
+        .then(data => updateAfspraken(data));
+}
+
 function getDate(year, month, day) {
     let date = `${day}-${month}-${year}`;
 
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            updateAfspraken(JSON.parse(this.responseText));
-        }
-    };
-    request.open("GET", `DBjs.php?t=0&d=${date}&user=${USER}&pass=${PASS}`, true);
-    request.send();
+    updateAfspraakData(year, month, day);
+
+    // let request = new XMLHttpRequest();
+    // request.onreadystatechange = function() {
+    //     if (this.readyState === 4 && this.status === 200) {
+    //         updateAfspraken(JSON.parse(this.responseText));
+    //     }
+    // };
+    // request.open("GET", `DBjs.php?t=0&d=${date}&user=${USER}&pass=${PASS}`, true);
+    // request.send();
+
+
 }
 
 // func(cell, row) wordt op elke geldige cel van de kalender uitgevoerd
