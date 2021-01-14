@@ -15,7 +15,7 @@ function returnIfValid($connection, $query) {
 
 /* type queries
  * 0 -> haal afspraken op per dag [admin]
- * 1 -> haal behandelingen op
+ * 1 -> verwijder een openingstijd-element [admin] | tId = integer
  * 2 -> haal openingstijden specifieke dag op | d = date-string
  * 3 -> haal per dag van maand op of SB die dag open is | d = date-string
  * 4 -> update status van specifieke afspraak [admin] | status = integer, id = integer
@@ -39,11 +39,18 @@ if (isset($_GET['t'])){
                 ]);
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                 echo json_encode($result);
-                break;
             }
             break;
-        case 1:
-            echo json_encode(returnIfValid($connection, "SELECT * FROM behandelingen"));
+        case 1: // verwijder timeslot
+            require_once "Includes/loginValidation.php";
+            if (checkLogin($connection, $_GET)) {
+                $timeId = intval($_GET['tId']);
+                if (is_numeric($timeId)) {
+                    $statement = $connection->prepare(
+                        "DELETE FROM openingstijden WHERE id=:id");
+                    $statement->execute([':id' => $timeId]);
+                }
+            }
             break;
         case 2: // json openingstijden van specifieke dag (_get[d])
             $startTime = strtotime($_GET['d']);
@@ -99,7 +106,7 @@ if (isset($_GET['t'])){
 
             }
             break;
-        case 5:
+        case 5: // voeg admin-account toe, verreist
             require_once "Includes/loginValidation.php";
             if (checkAdmin($connection, $_GET)) {
                 $newUser = $_GET['newU'];

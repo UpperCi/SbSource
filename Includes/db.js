@@ -74,6 +74,45 @@ function updateAfspraken(af) {
     }
 }
 
+// function quickTimeslot(time) {
+//     let slot = document.createElement('input');
+//     slot.setAttribute('type','time');
+//     slot.setAttribute('value',time);
+//     return slot;
+// }
+
+async function delDate(id) {
+    let url = `DBjs.php?t=1&tId=${id}&user=${USER}&pass=${PASS}`;
+    await fetch(url);
+
+    console.log(`verwijderen van timeslot ${id}`);
+}
+
+function upDate(open) {
+    document.getElementById("timeslot-overzicht").innerHTML = '';
+
+    for (let i = 0; i < open.length; i++) {
+        let t = open[i];
+        let timePeriod = getPeriodDisplay(parseInt(t['start']),parseInt(t['end']));
+
+        let cal = quickElement('div','cal-timeslot-in','');
+        cal.appendChild(quickElement('p','cal-timeslot-display', timePeriod));
+
+        let calDel = quickElement('i',"far",'');
+        calDel.classList.add('fa-trash-alt');
+        calDel.id = t['id'];
+        calDel.addEventListener('click', function(){
+            delDate(calDel.id);
+        })
+
+        cal.appendChild(calDel);
+
+        document.getElementById("timeslot-overzicht").appendChild(cal);
+
+        // console.log(`Op ${start.getDate()} ${months[start.getMonth()]} open van ${start.getHours()} tot ${end.getHours()}`)
+    }
+}
+
 async function updateAfspraakData(year, month, day) {
     let date = `${day}-${month}-${year}`;
     let url = `DBjs.php?t=0&d=${date}&user=${USER}&pass=${PASS}`;
@@ -83,36 +122,18 @@ async function updateAfspraakData(year, month, day) {
         .then(data => updateAfspraken(data));
 }
 
+async function updateOpeningstijdData(year, month, day) {
+    let date = `${day}-${month}-${year}`;
+    let url = `DBjs.php?t=2&d=${date}`;
+
+    await fetch(url)
+        .then(response => response.json())
+        .then(data => upDate(data));
+}
+
 function getDate(year, month, day) {
     updateAfspraakData(year, month, day);
-
-
-}
-
-// func(cell, row) wordt op elke geldige cel van de kalender uitgevoerd
-function forEachDatecell(func) {
-    let cal = document.getElementById("kalender-body");
-    let calRows = cal.childNodes;
-    for (let i = 0; i < calRows.length; i++) {
-        let row = calRows[i];
-        let cells = row.childNodes;
-        for (let j = 0; j < cells.length; j++) {
-            let cell = cells[j];
-            if (cell.children.length > 0) {
-                func(cell.children[0], row);
-            }
-        }
-    }
-}
-// update welke cell er geselecteerd staat zodat deze met CSS kan worden gemarkeerd
-// overzichtelijker dan '7 februari' uitschrijven en de gebruiker laten lezen
-function setSelected(id) {
-    forEachDatecell(function(cell){
-        if (cell.id === id) {
-            cell.classList.add('selected');
-        }
-        else cell.classList.remove('selected');
-    });
+    updateOpeningstijdData(year, month, day);
 }
 
 

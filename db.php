@@ -46,8 +46,11 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
         </div>
     </div>
 
+    <div id="timeslot-overzicht">
 
-    <div id="afspraak-overzicht"></div>
+    </div>
+
+    <div id="afspraak-overzicht">
         <div id="afspraak-pending">
             <h2>In Afwachting</h2>
             <div id="pending-content">
@@ -56,7 +59,11 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
                 <?php } ?>
             </div>
         </div>
+
     </div>
+</div>
+
+
 </body>
 
 <script async defer src="Includes/calendar.js"></script>
