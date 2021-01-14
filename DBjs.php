@@ -3,6 +3,7 @@
 # dat zorgt ervoor dat je de pagina niet hoeft te herladen met elke query
 # indien de query iets returnt wordt dit als JSON uitgeprint voor de JS
 require_once "Includes/init.php";
+require_once "Includes/loginValidation.php";
 
 function returnIfValid($connection, $query) {
     $result = $connection->query($query)
@@ -20,12 +21,12 @@ function returnIfValid($connection, $query) {
  * 3 -> haal per dag van maand op of SB die dag open is | d = date-string
  * 4 -> update status van specifieke afspraak [admin] | status = integer, id = integer
  * 5 -> voeg een admin_account toe [admin+] | newU = string, newP = string
+ * 6 -> voeg nieuwe openingstijd toe [admin] | start = integer, end = integer
  * */
 
 if (isset($_GET['t'])){
     switch ($_GET['t']) {
         case 0: // haal afspraken op
-            require_once "Includes/loginValidation.php";
             if (checkLogin($connection, $_GET)) {
                 $startTime = strtotime($_GET['d']);
                 if (!is_integer($startTime)) break;
@@ -42,7 +43,6 @@ if (isset($_GET['t'])){
             }
             break;
         case 1: // verwijder timeslot
-            require_once "Includes/loginValidation.php";
             if (checkLogin($connection, $_GET)) {
                 $timeId = intval($_GET['tId']);
                 if (is_numeric($timeId)) {
@@ -66,7 +66,7 @@ if (isset($_GET['t'])){
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode($result);
             break;
-        case 3: // json array per dag van maand wel of geen mogelijke tijden
+        case 3: // haal in json een true/false array op die per dag van maand aangeeft of er die dag openingstijden zijn
             $baseTime = strtotime($_GET['d']);
 
             $isOpen = [];
@@ -90,8 +90,7 @@ if (isset($_GET['t'])){
             }
             echo json_encode($isOpen);
             break;
-        case 4: // accept/deny afspraak
-            require_once "Includes/loginValidation.php";
+        case 4: // pas status van een afspraak aan
             if (checkLogin($connection, $_GET)) {
 
                 $status = intval($_GET['status']);
@@ -106,15 +105,26 @@ if (isset($_GET['t'])){
 
             }
             break;
-        case 5: // voeg admin-account toe, verreist
-            require_once "Includes/loginValidation.php";
+        case 5: // voeg admin-account toe, login-account heeft add_accounts nodig
             if (checkAdmin($connection, $_GET)) {
+                if (!filter_var($_GET['e-mail'], FILTER_VALIDATE_EMAIL)) break;
                 $newUser = $_GET['newU'];
                 $newPass = password_hash($_GET['newP'], PASSWORD_BCRYPT, ['cost' => 12]);
+
                 $statement = $connection->prepare("INSERT INTO admin_accounts VALUES 
                 (NULL, :user, :pass, 0)");
                 $statement->execute([':user' => $newUser, ':pass' => $newPass]);
             }
             break;
+        case 6: // voeg een openingstijd toe
+            if (checkLogin($connection,$_GET)) {
+                $start = intval($_GET['start']);
+                $end = intval($_GET['end']);
+                $statement = $connection->prepare(" INSERT INTO
+                openingstijden (`id`, `start`, `end`) VALUES (NULL, :start, :end);");
+                $statement->execute([
+                    ':start' => $start,
+                    ':end' => $end]);
+            }
     }
 }

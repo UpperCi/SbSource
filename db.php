@@ -49,6 +49,18 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
     <div id="timeslot-overzicht">
 
     </div>
+    <div id="afspraak-adder">
+        <label>
+            <input type="time" id="time-start">
+        </label>
+        <label>
+            <input type="time" id="time-end">
+        </label>
+        <label>
+            <input type="date" id="time-date">
+        </label>
+        <i class="fas fa-plus" id="afpsraak-adder-btn"></i>
+    </div>
 
     <div id="afspraak-overzicht">
         <div id="afspraak-pending">

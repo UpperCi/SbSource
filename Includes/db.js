@@ -103,6 +103,7 @@ function upDate(open) {
         calDel.id = t['id'];
         calDel.addEventListener('click', function(){
             delDate(calDel.id);
+            cal.remove();
         })
 
         cal.appendChild(calDel);
@@ -136,6 +137,27 @@ function getDate(year, month, day) {
     updateOpeningstijdData(year, month, day);
 }
 
+async function addOpen(date, start, end) {
+
+    let startTime = new Date(date + ' ' + start).getTime() / 1000;
+    let endTime = new Date(date + ' ' + end).getTime() / 1000;
+    let url = `DBjs.php?t=6&start=${startTime}&end=${endTime}&user=${USER}&pass=${PASS}`;
+
+    await fetch(url)
+        .then(response => console.log(response.url));
+}
+
+function initAdder() {
+    document.getElementById('afpsraak-adder-btn').addEventListener("click", function(){
+        let start = document.getElementById('time-start').value;
+        let end = document.getElementById('time-end').value;
+        let date = document.getElementById('time-date').value;
+
+        addOpen(date, start, end);
+    });
+}
+
 
 initAfspraken();
 initCalendarButtons();
+initAdder();

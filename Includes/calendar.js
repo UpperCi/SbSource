@@ -2,6 +2,7 @@
 let today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
+let currentDay = today.getDay();
 
 const months = ["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"];
 
@@ -69,6 +70,7 @@ function renderCalendar(month, year, monthdays) {
                     cell.setAttribute("class", "dateCellOpen");
                     cell.addEventListener("click", function(){
                         getDate(year, month + 1, cellId);
+                        currentDay = cellId;
                         setSelected(cellId);
                     })
                 }
