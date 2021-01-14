@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
     <title>Surely Beauty - Maak een afspraak</title>
 </head>
 <body>
-<form action="afspraak.php" method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+<form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
     <div id="kalendar-container">
         <div id="afspraak-kalender">
             <h2 id="kalender-date-desc"></h2>
@@ -95,5 +95,6 @@ if (isset($_POST['submit'])) {
 </footer>
 
 <script async defer src="Includes/index.js"></script>
+<script async defer src="Includes/calendar.js"></script>
 <script async defer src="Includes/afspraak.js"></script>
 </body>

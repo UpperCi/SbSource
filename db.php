@@ -59,4 +59,5 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
     </div>
 </body>
 
+<script async defer src="Includes/calendar.js"></script>
 <script async defer src="Includes/db.js"></script>

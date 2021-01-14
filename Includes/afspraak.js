@@ -1,102 +1,5 @@
 // Dankjewel https://medium.com/@nitinpatel_20236/challenge-of-building-a-calendar-with-pure-javascript-a86f1303267d
 
-let today = new Date();
-let currentMonth = today.getMonth();
-let currentYear = today.getFullYear();
-let monthDays = [];
-
-const months = ["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"];
-
-let monthAndYear = document.getElementById("monthAndYear");
-changeCalendar(currentMonth, currentYear);
-
-function initCalendarButtons() {
-    document.getElementById("kalender-prev").addEventListener("click", previous);
-    document.getElementById("kalender-next").addEventListener("click", next);
-}
-
-function next() {
-    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
-    currentMonth = (currentMonth + 1) % 12;
-    changeCalendar(currentMonth, currentYear);
-}
-
-function previous() {
-    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
-    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-    changeCalendar(currentMonth, currentYear);
-}
-
-async function changeCalendar(month, year) {
-    let date = `1-${month+1}-${year}`;
-    let url = `DBjs.php?t=3&d=${date}`;
-
-    await fetch(url)
-        .then(response => response.json())
-        .then(data => renderCalendar(month, year, data));
-}
-// gooi table met rijen, kolommen als weken, weekdagen in #kalender-body op basis van maand en jaar
-// grotendeels van het artikel bovenaan gecomment
-function renderCalendar(month, year, monthdays) {
-    let firstDay = (new Date(year, month)).getDay();
-    let tbl = document.getElementById("kalender-body");
-    let date = 1;
-
-    tbl.innerHTML = "";
-
-    let displayDate = `${months[month]} ${year}`;
-    document.getElementById("kalender-date-desc").textContent = displayDate;
-
-    for (let i = 0; i < 6; i++) {
-        let row = document.createElement("tr");
-        for (let j = 0; j < 7; j++) {
-            if (i === 0 && j < firstDay) {
-                cell = document.createElement("td");
-                cellText = document.createTextNode("");
-                cell.appendChild(cellText);
-                row.appendChild(cell);
-            }
-            else if (date > daysInMonth(month, year)) {
-                break;
-            }
-
-            else {
-                let cellOuter = document.createElement("td");
-                let cell = document.createElement("input");
-                cell.setAttribute("type", "button");
-                let cellId = `${date}`;
-                let cellOpen = monthdays[date - 1];
-                cell.setAttribute("value", date.toString());
-
-                cell.setAttribute("id", cellId);
-                if (cellOpen) { // indien er vandaag openingstijden zijn
-                    cell.setAttribute("class", "dateCellOpen");
-                    cell.addEventListener("click", function(){
-                        getDate(year, month + 1, cellId);
-                        setSelected(cellId);
-                    })
-                }
-                else {
-                    cell.setAttribute("class", "dateCellClosed");
-                    cell.setAttribute("disabled", "");
-                }
-
-                cellOuter.appendChild(cell);
-                row.appendChild(cellOuter);
-                date++;
-            }
-
-        }
-        tbl.appendChild(row);
-    }
-}
-
-function daysInMonth(iMonth, iYear)
-{
-    let tempDate = new Date(iYear, iMonth, 32).getDate();
-    return 32 - tempDate;
-}
-
 async function getDate(year, month, day) {
     let date = `${day}-${month}-${year}`;
     let url = `DBjs.php?t=2&d=${date}`;
@@ -106,31 +9,7 @@ async function getDate(year, month, day) {
         .then(data => upDate(data));
 }
 
-// func(cell, row) wordt op elke geldige cel van de kalender uitgevoerd
-function forEachDatecell(func) {
-    let cal = document.getElementById("kalender-body");
-    let calRows = cal.childNodes;
-    for (let i = 0; i < calRows.length; i++) {
-        let row = calRows[i];
-        let cells = row.childNodes;
-        for (let j = 0; j < cells.length; j++) {
-            let cell = cells[j];
-            if (cell.children.length > 0) {
-                func(cell.children[0], row);
-            }
-        }
-    }
-}
-// update welke cell er geselecteerd staat zodat deze met CSS kan worden gemarkeerd
-// overzichtelijker dan '7 februari' uitschrijven en de gebruiker laten lezen
-function setSelected(id) {
-    forEachDatecell(function(cell, row){
-        if (cell.id === id) {
-            cell.classList.add('selected');
-        }
-        else cell.classList.remove('selected');
-    });
-}
+
 // misschien had een 'forEachRadio' overzichtelijker geweest maar het wordt toch maar 1 keer gebruikt
 // geeft net zoals setSelected een knop aan om vervolgens met CSS overzichtelijk te markeren
 function radioChange() {
@@ -155,7 +34,7 @@ function radioChange() {
 // maakt een [11:30] knop en voegt het toe aan #time-select (11:30 is dynamisch, uiteraard)
 function createTimeRadio(time) {
     let timeDate = new Date(time * 1000);
-    let timeMin = timeDate.getMinutes() == 0 ? '00' : timeDate.getMinutes();
+    let timeMin = timeDate.getMinutes() === 0 ? '00' : timeDate.getMinutes();
     let timeDisplay = `${timeDate.getHours()}:${timeMin}`;
     let timeId = `time-${timeDisplay}`;
 
@@ -229,10 +108,9 @@ function checkChange() {
 }
 // initialize afspraak-checkbox eventListeners
 function initChecks() {
-    forEachCheck(function(check, checkParent){
+    forEachCheck(function(check){
         check.addEventListener("change", checkChange);
     });
 }
 
 initChecks();
-initCalendarButtons();

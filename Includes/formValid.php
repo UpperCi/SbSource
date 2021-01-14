@@ -7,10 +7,10 @@
 // valideert van een afspraak de tijden, behandelingen, email en telefoonnummer
 // returnt assoc-arr met errors
 /**
- * @param ArrayObject $res
+ * @param array $res
  * @return array
  */
-function validateAfspraak(ArrayObject $res): array
+function validateAfspraak(array $res): array
 {
     $errs = [];
 
