@@ -59,7 +59,24 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
         <label>
             <input type="date" id="time-date">
         </label>
+
+        <label for="do-repeat">Herhaal openingstijd</label>
+        <input type="checkbox" id="do-repeat">
+
+        <div id="repeat-div" style="display: none">
+            <label for="time-repeat-type" class="time-desc">herhaal elke </label>
+            <select id="time-repeat-type">
+                <option value="d">dag</option>
+                <option value="w">week</option>
+                <option value="m">maand</option>
+            </select>
+            <p class="time-desc"> voor </p>
+            <input type="number" id="time-repeat-amount">
+            <label for="time-repeat-amount"> keer.</label>
+        </div>
+
         <i class="fas fa-plus" id="afpsraak-adder-btn"></i>
+
     </div>
 
     <div id="afspraak-overzicht">

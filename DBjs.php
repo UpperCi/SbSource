@@ -116,7 +116,7 @@ if (isset($_GET['t'])){
                 $statement->execute([':user' => $newUser, ':pass' => $newPass]);
             }
             break;
-        case 6: // voeg een openingstijd toe
+        case 6: // voeg een timeslot toe
             if (checkLogin($connection,$_GET)) {
                 $start = intval($_GET['start']);
                 $end = intval($_GET['end']);
@@ -126,5 +126,44 @@ if (isset($_GET['t'])){
                     ':start' => $start,
                     ':end' => $end]);
             }
+        case 7: // voeg een herhalende timeslot toe
+            if (checkLogin($connection,$_GET)) {
+                $start = intval($_GET['start']);
+                $end = intval($_GET['end']);
+                $statement = $connection->prepare(" INSERT INTO
+                openingstijden (`id`, `start`, `end`) VALUES (NULL, :start, :end);");
+                $repeatCount = intval($_GET['rCount']);
+                switch ($_GET['rType']) {
+                    case 'd': // herhaal elke dag
+                        foreach(range(0, $repeatCount - 1) as $i) {
+                            $timeStampAdd = $i * 86400;
+                            $statement->execute([
+                                ':start' => $start + $timeStampAdd,
+                                ':end' => $end + $timeStampAdd
+                            ]);
+                        }
+                        break;
+                    case 'w': // herhaal elke week
+                        foreach(range(0, $repeatCount - 1) as $i) {
+                            $timeStampAdd = $i * 86400 * 7;
+                            $statement->execute([
+                                ':start' => $start + $timeStampAdd,
+                                ':end' => $end + $timeStampAdd
+                            ]);
+                        }
+                        break;
+                    case 'm': // herhaal elke maand
+                        foreach(range(0, $repeatCount - 1) as $i) {
+                            $newStart = date_add(date_create($start), date_interval_create_from_date_string("${$i} months"));
+                            $newEnd = date_add(date_create($end), date_interval_create_from_date_string("${$i} months"));
+                            $statement->execute([
+                                ':start' => $newStart,
+                                ':end' => $newEnd
+                            ]);
+                        }
+                        break;
+                }
+            }
+            break;
     }
 }

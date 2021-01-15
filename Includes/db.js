@@ -74,18 +74,12 @@ function updateAfspraken(af) {
     }
 }
 
-// function quickTimeslot(time) {
-//     let slot = document.createElement('input');
-//     slot.setAttribute('type','time');
-//     slot.setAttribute('value',time);
-//     return slot;
-// }
-
 async function delDate(id) {
     let url = `DBjs.php?t=1&tId=${id}&user=${USER}&pass=${PASS}`;
     await fetch(url);
 
     console.log(`verwijderen van timeslot ${id}`);
+    changeCalendar(currentMonth, currentYear);
 }
 
 function upDate(open) {
@@ -109,11 +103,9 @@ function upDate(open) {
         cal.appendChild(calDel);
 
         document.getElementById("timeslot-overzicht").appendChild(cal);
-
-        // console.log(`Op ${start.getDate()} ${months[start.getMonth()]} open van ${start.getHours()} tot ${end.getHours()}`)
     }
 }
-
+// haal afspraken van bepaalde dag op
 async function updateAfspraakData(year, month, day) {
     let date = `${day}-${month}-${year}`;
     let url = `DBjs.php?t=0&d=${date}&user=${USER}&pass=${PASS}`;
@@ -122,7 +114,7 @@ async function updateAfspraakData(year, month, day) {
         .then(response => response.json())
         .then(data => updateAfspraken(data));
 }
-
+// haal openingstijden van bepaalde dag op
 async function updateOpeningstijdData(year, month, day) {
     let date = `${day}-${month}-${year}`;
     let url = `DBjs.php?t=2&d=${date}`;
@@ -136,28 +128,54 @@ function getDate(year, month, day) {
     updateAfspraakData(year, month, day);
     updateOpeningstijdData(year, month, day);
 }
-
+// voer een fetch uit met get-variabelen om een openingstijd toe te voegen aan de db
 async function addOpen(date, start, end) {
-
     let startTime = new Date(date + ' ' + start).getTime() / 1000;
     let endTime = new Date(date + ' ' + end).getTime() / 1000;
     let url = `DBjs.php?t=6&start=${startTime}&end=${endTime}&user=${USER}&pass=${PASS}`;
 
     await fetch(url)
-        .then(response => console.log(response.url));
+        .then(response => console.log(response.url))
+        .then(changeCalendar(currentMonth, currentYear));
 }
 
+async function addOpenRepeat(date, start, end, rType, rCount) {
+    let startTime = new Date(date + ' ' + start).getTime() / 1000;
+    let endTime = new Date(date + ' ' + end).getTime() / 1000;
+    let url = `DBjs.php?t=7&start=${startTime}&end=${endTime}&user=${USER}&pass=${PASS}&rCount=${rCount}&rType=${rType}`;
+
+    await fetch(url)
+        .then(response => console.log(response.url))
+        .then(changeCalendar(currentMonth, currentYear));
+}
+// eventlistener aan openingstijd-add-knop
 function initAdder() {
-    document.getElementById('afpsraak-adder-btn').addEventListener("click", function(){
+    document.getElementById('afpsraak-adder-btn').addEventListener("click", async function(){
+        let repeatCheckbox = document.getElementById('do-repeat');
         let start = document.getElementById('time-start').value;
         let end = document.getElementById('time-end').value;
         let date = document.getElementById('time-date').value;
-
-        addOpen(date, start, end);
+        if (repeatCheckbox.checked) {
+            let repeatType = document.getElementById('time-repeat-type').value;
+            let repeatCount = document.getElementById('time-repeat-amount').value;
+            addOpenRepeat(date, start, end, repeatType, repeatCount);
+        }
+        else addOpen(date, start, end);
     });
 }
 
+function initRepeat() {
+    let repeatCheckbox = document.getElementById('do-repeat');
+    repeatCheckbox.addEventListener("change", function(){
+        if (repeatCheckbox.checked) {
+            document.getElementById('repeat-div').style.display = 'block';
+        }
+        else {
+            document.getElementById('repeat-div').style.display = 'none';
+        }});
+}
 
 initAfspraken();
 initCalendarButtons();
 initAdder();
+initRepeat();
