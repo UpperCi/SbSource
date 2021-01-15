@@ -30,6 +30,8 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
                     <th>Do</th>
                     <th>Vr</th>
                     <th>Za</th>
+                    <th><label for="do-erase"><i class="fas fa-eraser"></i></label>
+                        <input type="checkbox" id="do-erase"></th>
                 </tr>
                 </thead>
                 <tbody id="kalender-body">
@@ -41,9 +43,9 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
                 <input type="button" id="kalender-next" value="volgende">
             </div>
         </div>
-        <div id="afspraken">
+    </div>
+    <div id="afspraken">
 
-        </div>
     </div>
 
     <div id="timeslot-overzicht">

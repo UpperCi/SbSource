@@ -22,6 +22,8 @@ function returnIfValid($connection, $query) {
  * 4 -> update status van specifieke afspraak [admin] | status = integer, id = integer
  * 5 -> voeg een admin_account toe [admin+] | newU = string, newP = string
  * 6 -> voeg nieuwe openingstijd toe [admin] | start = integer, end = integer
+ * 7 -> voeg meerdere openingstijden toe in één keer [admin] | start = integer, end = integer, rCount = integer, rType = char
+ * 8 -> verwijder alle openingstijden van één dag [admin] | start = date-string
  * */
 
 if (isset($_GET['t'])){
@@ -163,6 +165,20 @@ if (isset($_GET['t'])){
                         }
                         break;
                 }
+            }
+            break;
+        case 8: // verwijder timeslots van één dag
+            if (checkLogin($connection, $_GET)) {
+                $startTime = strtotime($_GET['d']);
+                if (!is_integer($startTime)) break;
+                $endTime = $startTime + 86400;
+
+                $statement = $connection->prepare
+                ("DELETE FROM openingstijden WHERE start > :start AND end < :end");
+                $statement->execute([
+                    ':start' => $startTime,
+                    ':end' => $endTime
+                ]);
             }
             break;
     }

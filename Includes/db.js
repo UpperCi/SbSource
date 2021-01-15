@@ -1,3 +1,4 @@
+
 // update de status van een afspraak in de database
 function updateStatus(id, newStatus) {
     let request = new XMLHttpRequest();
@@ -124,9 +125,22 @@ async function updateOpeningstijdData(year, month, day) {
         .then(data => upDate(data));
 }
 
-function getDate(year, month, day) {
-    updateAfspraakData(year, month, day);
-    updateOpeningstijdData(year, month, day);
+async function delOpen(year, month, day) {
+    let date = `${day}-${month}-${year}`;
+    let url = `DBjs.php?t=8&d=${date}&user=${USER}&pass=${PASS}`;
+    await fetch(url);
+}
+
+async function getDate(year, month, day) {
+    if (document.getElementById('do-erase').checked) {
+        await delOpen(year, month, day);
+    }
+    else {
+        await updateAfspraakData(year, month, day);
+        await updateOpeningstijdData(year, month, day);
+    }
+    changeCalendar(currentMonth, currentYear);
+    return 1;
 }
 // voer een fetch uit met get-variabelen om een openingstijd toe te voegen aan de db
 async function addOpen(date, start, end) {
@@ -135,8 +149,7 @@ async function addOpen(date, start, end) {
     let url = `DBjs.php?t=6&start=${startTime}&end=${endTime}&user=${USER}&pass=${PASS}`;
 
     await fetch(url)
-        .then(response => console.log(response.url))
-        .then(changeCalendar(currentMonth, currentYear));
+        .then(response => console.log(response.url));
 }
 
 async function addOpenRepeat(date, start, end, rType, rCount) {
@@ -145,8 +158,7 @@ async function addOpenRepeat(date, start, end, rType, rCount) {
     let url = `DBjs.php?t=7&start=${startTime}&end=${endTime}&user=${USER}&pass=${PASS}&rCount=${rCount}&rType=${rType}`;
 
     await fetch(url)
-        .then(response => console.log(response.url))
-        .then(changeCalendar(currentMonth, currentYear));
+        .then(response => console.log(response.url));
 }
 // eventlistener aan openingstijd-add-knop
 function initAdder() {
@@ -176,6 +188,5 @@ function initRepeat() {
 }
 
 initAfspraken();
-initCalendarButtons();
 initAdder();
 initRepeat();

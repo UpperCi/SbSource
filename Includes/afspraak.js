@@ -47,7 +47,7 @@ function createTimeRadio(time) {
     radio.setAttribute("name", "selectedTime");
     radio.setAttribute("id", timeId);
     radio.setAttribute("value", time);
-    radio.addEventListener("change", radioChange)
+    radio.addEventListener("change", radioChange);
 
     let label = document.createElement("label");
     label.textContent = timeDisplay;

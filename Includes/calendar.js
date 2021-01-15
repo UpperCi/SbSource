@@ -25,14 +25,19 @@ function previous() {
     changeCalendar(currentMonth, currentYear);
 }
 
-async function changeCalendar(month, year) {
+function changeCalendar(month, year) {
     let date = `1-${month+1}-${year}`;
     let url = `DBjs.php?t=3&d=${date}`;
 
-    await fetch(url)
+    fetch(url)
         .then(response => response.json())
         .then(data => renderCalendar(month, year, data));
 }
+
+function cellEventListener(cell) {
+
+}
+
 // gooi table met rijen, kolommen als weken, weekdagen in #kalender-body op basis van maand en jaar
 // grotendeels van het artikel bovenaan gecomment
 function renderCalendar(month, year, monthdays) {
@@ -115,6 +120,7 @@ function forEachDatecell(func) {
 function setSelected(id) {
     forEachDatecell(function(cell){
         if (cell.id === id) {
+            console.log(id)
             cell.classList.add('selected');
         }
         else cell.classList.remove('selected');
