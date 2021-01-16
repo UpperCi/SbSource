@@ -51,8 +51,6 @@ $behandelingen = behandelAssoc($connection);
     <div id="afspraak-div">
         <a href="afspraak.php">Maak een afpsraak</a>
     </div>
-
-
 </main>
 <footer>
     <?= file_get_contents("Includes/html/footer.html") ?>

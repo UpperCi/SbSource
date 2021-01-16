@@ -26,31 +26,7 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
 <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    <div id="kalendar-container">
-        <div id="afspraak-kalender">
-            <h2 id="kalender-date-desc"></h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Zo</th>
-                    <th>Ma</th>
-                    <th>Di</th>
-                    <th>Wo</th>
-                    <th>Do</th>
-                    <th>Vr</th>
-                    <th>Za</th>
-                </tr>
-                </thead>
-                <tbody id="kalender-body">
-
-                </tbody>
-            </table>
-            <div id="kalender-btns">
-                <input type="button" id="kalender-prev" value="vorige">
-                <input type="button" id="kalender-next" value="volgende">
-            </div>
-        </div>
-    </div>
+    <?= file_get_contents("Includes/html/calendar.html") ?>
     <h2 id="afspraak-selected-date"></h2>
     <p class="error" id="time-error"><?= arrIfSet($errs,'time'); ?></p>
     <ul id="time-select">
@@ -67,10 +43,8 @@ if (isset($_POST['submit'])) {
                         <input type="checkbox" id=<?= "behandeling_{$behandeling['id']}" ?> class="behandel-check" name="behandelingen[]" value="<?= $behandeling['id']; ?>">
                     </label>
                 <?php } ?>
-
             </div>
         <?php } ?>
-
     </div>
 
     <div id="contact-info">
