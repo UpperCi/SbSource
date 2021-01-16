@@ -39,17 +39,6 @@ form {
 
     box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.3);
 }
-
-input {
-    -webkit-appearance: none;
-    -webkit-border-radius: 0;
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    -moz-appearance: none;
-    -moz-border-radius: 0;
-}
 .error {
     color: red;
     font-family: 'Roboto Slab', serif;

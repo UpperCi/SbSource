@@ -12,12 +12,14 @@ require_once "Includes/init.php";
 <form action="db.php" method="post">
     <div class="login-field">
         <label for="user">E-mail</label>
-        <input type="text" value="" name="user" placeholder="e-mail">
+        <input id="user" type="text" value="" name="user" placeholder="e-mail">
     </div>
     <div class="login-field">
         <label for="pass">Wachtwoord</label>
-        <input type="password" value="" name="pass" placeholder="wachtwoord">
+        <input id="pass" type="password" value="" name="pass" placeholder="wachtwoord">
     </div>
-    <input type="submit" name="submit" value="Log In">
+    <div id="login-div">
+        <input type="submit" name="submit" value="Log In">
+    </div>
 </form>
 </body>

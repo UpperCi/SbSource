@@ -1,5 +1,5 @@
 <?php
-require_once "ICS/ICSloader.php";
+require_once "./Includes/ICS/ICSloader.php";
 
 use Jsvrcek\ICS\Exception\CalendarEventException;
 use Jsvrcek\ICS\Model\Calendar;
