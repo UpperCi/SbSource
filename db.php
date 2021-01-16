@@ -7,8 +7,8 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
 
 <html lang="en">
 <head>
-    <?= file_get_contents("Includes/head.html"); ?>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <?= file_get_contents("Includes/html/head.html"); ?>
+    <link rel="stylesheet" type="text/css" href="Includes/css/style.css"/>
     <title>Surely Beauty</title>
     <script>
         const USER = "<?= $_SESSION['user']; ?>";
@@ -97,5 +97,5 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
 
 </body>
 
-<script async defer src="Includes/calendar.js"></script>
-<script async defer src="Includes/db.js"></script>
+<script async defer src="Includes/JS/calendar.js"></script>
+<script async defer src="Includes/JS/db.js"></script>

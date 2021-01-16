@@ -17,10 +17,6 @@ body {
     margin: 0;
 }
 
-footer {
-    background-color: var(--higlight-color-dark);
-}
-
 .behandeling {
     width: calc(50% - 2rem);
     padding: 1.5rem;
@@ -57,16 +53,6 @@ footer {
     text-align: end;
     margin-top: 0;
     margin-bottom: 0;
-}
-
-.social-link {
-    transition: all 0.2s;
-    color: rgba(255,255,255,0.6);
-}
-
-.social-link :hover{
-    transition: all 0.2s;
-    color: rgba(255,255,255,0.9);
 }
 
 .behandel-sectie {
@@ -238,27 +224,6 @@ footer {
 
 #prijslijst {
     margin: 0 6%;
-}
-
-#socials {
-    display: flex;
-}
-
-#socials p {
-    margin-right: auto;
-    margin-left: 0.5rem;
-    color: rgba(255,255,255,0.8);
-    font-family: 'Roboto', sans-serif;
-    -webkit-
-}
-
-#socials i {
-    font-size: 24px;
-    padding: 0.8rem 0.5rem;
-}
-
-#socials :last-child{
-    margin-right: 0.2rem;
 }
 
 #behandel-tekst {

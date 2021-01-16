@@ -15,7 +15,6 @@ async function getDate(year, month, day) {
 function radioChange() {
     let fullList = document.getElementById("time-select");
     let listElements = fullList.childNodes;
-    console.log("ja");
     for (let i = 0; i < listElements.length; i++) {
         let el = listElements[i];
         let elChildren = el.childNodes;

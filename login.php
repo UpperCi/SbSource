@@ -4,22 +4,20 @@ require_once "Includes/init.php";
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="css/db.css"/>
+    <?= file_get_contents("Includes/html/head.html"); ?>
+    <link rel="stylesheet" type="text/css" href="Includes/css/login.css"/>
     <title>Surelybeauty</title>
 </head>
 <body>
-<p>Log in!</p>
 <form action="db.php" method="post">
     <div class="login-field">
-        <input type="text" value="" name="user">
+        <label for="user">E-mail</label>
+        <input type="text" value="" name="user" placeholder="e-mail">
     </div>
     <div class="login-field">
-        <input type="password" value="" name="pass">
+        <label for="pass">Wachtwoord</label>
+        <input type="password" value="" name="pass" placeholder="wachtwoord">
     </div>
-    <input type="submit" name="submit" value="submit">
+    <input type="submit" name="submit" value="Log In">
 </form>
 </body>

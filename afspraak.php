@@ -20,8 +20,8 @@ if (isset($_POST['submit'])) {
 <!doctype html>
 <html lang="en">
 <head>
-    <?= file_get_contents("Includes/head.html"); ?>
-    <link rel="stylesheet" type="text/css" href="css/afspraak.css"/>
+    <?= file_get_contents("Includes/html/head.html"); ?>
+    <link rel="stylesheet" type="text/css" href="Includes/css/afspraak.css"/>
     <title>Surely Beauty - Maak een afspraak</title>
 </head>
 <body>
@@ -91,10 +91,10 @@ if (isset($_POST['submit'])) {
 </form>
 
 <footer>
-    <?= file_get_contents("Includes/footer.html") ?>
+    <?= file_get_contents("Includes/html/footer.html") ?>
 </footer>
 
-<script async defer src="Includes/index.js"></script>
-<script async defer src="Includes/calendar.js"></script>
-<script async defer src="Includes/afspraak.js"></script>
+<script async defer src="Includes/JS/index.js"></script>
+<script async defer src="Includes/JS/calendar.js"></script>
+<script async defer src="Includes/JS/afspraak.js"></script>
 </body>

@@ -1,0 +1,16 @@
+body {
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: auto;
+    font-family: 'Roboto Slab', serif;
+    font-size: 24px;
+}
+
+.login-field label {
+
+}
+
+.login-field input {
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+}

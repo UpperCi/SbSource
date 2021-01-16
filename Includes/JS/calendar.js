@@ -34,10 +34,6 @@ function changeCalendar(month, year) {
         .then(data => renderCalendar(month, year, data));
 }
 
-function cellEventListener(cell) {
-
-}
-
 // gooi table met rijen, kolommen als weken, weekdagen in #kalender-body op basis van maand en jaar
 // grotendeels van het artikel bovenaan gecomment
 function renderCalendar(month, year, monthdays) {

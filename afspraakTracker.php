@@ -13,8 +13,8 @@ $ICSurl = createAfspraakICS($connection, $info);
 <!doctype html>
 <html lang="en">
 <head>
-    <?= file_get_contents("Includes/head.html"); ?>
-    <link rel="stylesheet" type="text/css" href="css/tracker.css"/>
+    <?= file_get_contents("Includes/html/head.html"); ?>
+    <link rel="stylesheet" type="text/css" href="Includes/css/tracker.css"/>
     <title>Surely Beauty</title>
 </head>
 <body>

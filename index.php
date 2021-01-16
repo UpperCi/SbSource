@@ -5,8 +5,8 @@ $behandelingen = behandelAssoc($connection);
 <!doctype html>
 <html lang="en">
 <head>
-    <?= file_get_contents("Includes/head.html"); ?>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <?= file_get_contents("Includes/html/head.html"); ?>
+    <link rel="stylesheet" type="text/css" href="Includes/css/style.css"/>
     <title>Surely Beauty</title>
 </head>
 <body>
@@ -55,7 +55,7 @@ $behandelingen = behandelAssoc($connection);
 
 </main>
 <footer>
-    <?= file_get_contents("Includes/footer.html") ?>
+    <?= file_get_contents("Includes/html/footer.html") ?>
 </footer>
-<script async defer src="Includes/index.js"></script>
+<script async defer src="Includes/JS/index.js"></script>
 </body>
