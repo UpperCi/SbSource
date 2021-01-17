@@ -13,17 +13,6 @@ td {
     padding: 0;
 }
 
-input {
-    -webkit-appearance: none;
-    -webkit-border-radius: 0;
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    -moz-appearance: none;
-    -moz-border-radius: 0;
-}
-
 input:disabled{
     color: rgba(0, 0, 0, 0.3);
 }

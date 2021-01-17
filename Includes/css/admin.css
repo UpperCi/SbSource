@@ -1,0 +1,134 @@
+body {
+    display: flex;
+    margin: 0;
+    background-color: var(--higlight-color);
+    padding-top: 1rem;
+}
+
+main {
+    flex: 3;
+}
+
+aside {
+    flex: 1;
+}
+
+.overzicht {
+    flex: 1;
+}
+
+#kalendar-container {
+    background-color: white;
+    box-shadow: 0 6px 8px rgba(0,0,0,0.4);
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+#afspraak-adder {
+    display: flex;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: 1rem auto;
+
+
+    background-color: var(--higlight-color-light);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.4);
+    border-radius: 1rem;
+    padding: 1rem;
+
+}
+
+#afpsraak-adder-btn {
+    font-size: 2rem;
+    width: -moz-fit-content;
+    width: fit-content;
+    height: fit-content;
+    margin: auto 1rem;
+
+    background-color: var(--higlight-color);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+
+    transition: background-color 0.2s, box-shadow 0.2s, border-radius 0.4s;
+}
+
+#afpsraak-adder-btn:hover {
+    background-color: var(--higlight-color-dark);
+    border-radius: 25%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+#do-repeat-label {
+
+}
+
+#kalendar-container {
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: auto;
+}
+
+#overzichten {
+    display: flex;
+}
+
+#repeat-full {
+    width: -moz-fit-conte   nt;
+    width: fit-content;
+    margin: 1rem auto auto;
+}
+
+#repeat-full, #repeat-div {
+    display: flex;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: var(--font-med) !important;
+}
+
+#afspraak-overzicht {
+    float: right;
+    background-color: white;
+    box-shadow: 0 6px 8px rgba(0,0,0,0.4);
+    border-radius: 1rem 0 0 1rem;
+    padding: 2rem;
+
+    height: fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+
+}
+
+.time-desc, #time-repeat-type, #time-repeat-amount, #do-repeat-label {
+    max-width: 6rem;
+    margin: 0 0.2em;
+    align-self: center;
+}
+
+#time-repeat-amount {
+    /*max-w*/
+}
+
+[id*='time-'] {
+    border: 0;
+    outline: 0;
+    font-size: var(--font-med);
+    font-family: 'Roboto', sans-serif;
+
+    border-bottom: 1px solid black;
+    margin: 0 0.5rem;
+
+    border-radius: 0.5rem 0.5rem 0 0;
+    padding: 0.2rem 0.5rem;
+}
+
+@media only screen and (max-width: 800px) {
+    body {
+        display: block;
+    }
+}

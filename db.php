@@ -8,7 +8,7 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
 <html lang="en">
 <head>
     <?= file_get_contents("Includes/html/head.html"); ?>
-    <link rel="stylesheet" type="text/css" href="Includes/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="Includes/css/admin.css"/>
     <title>Surely Beauty</title>
     <script>
         const USER = "<?= $_SESSION['user']; ?>";
@@ -16,71 +16,62 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
     </script>
 </head>
 <body>
-<div id="db-afspraken">
-    <div id="kalendar-container">
-        <div id="afspraak-kalender">
-            <h2 id="kalender-date-desc"></h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Zo</th>
-                    <th>Ma</th>
-                    <th>Di</th>
-                    <th>Wo</th>
-                    <th>Do</th>
-                    <th>Vr</th>
-                    <th>Za</th>
-                    <th><label for="do-erase"><i class="fas fa-eraser"></i></label>
-                        <input type="checkbox" id="do-erase"></th>
-                </tr>
-                </thead>
-                <tbody id="kalender-body">
+<main>
+    <?= file_get_contents("Includes/html/calendar.html") ?>
 
-                </tbody>
-            </table>
-            <div id="kalender-btns">
-                <input type="button" id="kalender-prev" value="vorige">
-                <input type="button" id="kalender-next" value="volgende">
+    <label for="do-erase"><i class="fas fa-eraser"></i></label>
+    <input type="checkbox" id="do-erase">
+
+    <div id="afspraak-adder">
+        <div id="data-wrapper">
+            <div id="adder-main">
+                <label>
+                    <input type="time" id="time-start">
+                </label>
+                <label>
+                    <input type="time" id="time-end">
+                </label>
+                <label>
+                    <input type="date" id="time-date">
+                </label>
+            </div>
+
+            <div id="repeat-full">
+                <label id="do-repeat-label" for="do-repeat">Herhaal</label>
+                <input type="checkbox" id="do-repeat">
+
+                <div id="repeat-div" style="display: none">
+                    <label for="time-repeat-type" class="time-desc">elke</label>
+                    <select id="time-repeat-type">
+                        <option value="d">dag</option>
+                        <option value="w">week</option>
+<!--                        <option value="m">maand</option>-->
+                    </select>
+                    <p class="time-desc">voor</p>
+                    <input type="number" id="time-repeat-amount">
+                    <label class="time-desc" for="time-repeat-amount">keer</label>
+                </div>
+
             </div>
         </div>
-    </div>
-    <div id="afspraken">
 
-    </div>
-
-    <div id="timeslot-overzicht">
-
-    </div>
-    <div id="afspraak-adder">
-        <label>
-            <input type="time" id="time-start">
-        </label>
-        <label>
-            <input type="time" id="time-end">
-        </label>
-        <label>
-            <input type="date" id="time-date">
-        </label>
-
-        <label for="do-repeat">Herhaal openingstijd</label>
-        <input type="checkbox" id="do-repeat">
-
-        <div id="repeat-div" style="display: none">
-            <label for="time-repeat-type" class="time-desc">herhaal elke </label>
-            <select id="time-repeat-type">
-                <option value="d">dag</option>
-                <option value="w">week</option>
-                <option value="m">maand</option>
-            </select>
-            <p class="time-desc"> voor </p>
-            <input type="number" id="time-repeat-amount">
-            <label for="time-repeat-amount"> keer.</label>
-        </div>
 
         <i class="fas fa-plus" id="afpsraak-adder-btn"></i>
 
     </div>
 
+    <div id="overzichten">
+        <div id="afspraken" class="overzicht">
+
+        </div>
+
+        <div id="timeslot-overzicht" class="overzicht">
+
+        </div>
+    </div>
+
+</main>
+<aside>
     <div id="afspraak-overzicht">
         <div id="afspraak-pending">
             <h2>In Afwachting</h2>
@@ -92,7 +83,7 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
         </div>
 
     </div>
-</div>
+</aside>
 
 
 </body>

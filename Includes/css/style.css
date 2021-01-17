@@ -1,18 +1,3 @@
-:root {
-    --higlight-color-light: #E1D8F1;
-    --higlight-color: #765291;
-    --higlight-color-dark: #3f2a5e;
-    scroll-behavior: smooth;
-
-    --font-large: 32px;
-    --font-med: 24px;
-    --font-small: 16px;
-}
-
-* {
-    box-sizing: border-box;
-}
-
 body {
     margin: 0;
 }

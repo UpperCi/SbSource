@@ -180,7 +180,7 @@ function initRepeat() {
     let repeatCheckbox = document.getElementById('do-repeat');
     repeatCheckbox.addEventListener("change", function(){
         if (repeatCheckbox.checked) {
-            document.getElementById('repeat-div').style.display = 'block';
+            document.getElementById('repeat-div').style.display = 'flex';
         }
         else {
             document.getElementById('repeat-div').style.display = 'none';

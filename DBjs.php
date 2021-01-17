@@ -179,6 +179,12 @@ if (isset($_GET['t'])){
                     ':start' => $startTime,
                     ':end' => $endTime
                 ]);
+                $statement = $connection->prepare
+                ("DELETE FROM afspraken WHERE start > :start AND end < :end");
+                $statement->execute([
+                    ':start' => $startTime,
+                    ':end' => $endTime
+                ]);
             }
             break;
     }

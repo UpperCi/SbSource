@@ -3,6 +3,7 @@ let today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
 let currentDay = today.getDay();
+let selectedId = -1;
 
 const months = ["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"];
 
@@ -73,7 +74,10 @@ function renderCalendar(month, year, monthdays) {
                         getDate(year, month + 1, cellId);
                         currentDay = cellId;
                         setSelected(cellId);
-                    })
+                    });
+                    if (cellId == selectedId) {
+                        cell.classList.add('selected');
+                    }
                 }
                 else {
                     cell.setAttribute("class", "dateCellClosed");
@@ -114,6 +118,7 @@ function forEachDatecell(func) {
 // update welke cell er geselecteerd staat zodat deze met CSS kan worden gemarkeerd
 // overzichtelijker dan '7 februari' uitschrijven en de gebruiker laten lezen
 function setSelected(id) {
+    selectedId = id;
     forEachDatecell(function(cell){
         if (cell.id === id) {
             console.log(id)
