@@ -39,6 +39,7 @@ form {
 
     box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.3);
 }
+
 .error {
     color: red;
     font-family: 'Roboto Slab', serif;
@@ -53,21 +54,21 @@ form {
 
 .behandeling {
     transition: all 0.2s;
-    width: calc((100%/3) - 1rem);
+    width: calc((100% / 3) - 1rem);
     padding: 1rem;
     margin: 0.5rem;
     display: flex;
 
     background-color: var(--higlight-color-light);
     border-radius: 1rem;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 
     cursor: pointer;
 }
 
 .behandeling:hover {
     transition: all 0.2s;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
 }
 
 .behandeling.selected {
@@ -104,14 +105,14 @@ form {
 
 .tijd {
     margin: 0.2rem 0 0 0;
-    color: rgba(0,0,0,0.7);
+    color: rgba(0, 0, 0, 0.7);
     font-size: var(--font-small);
 }
 
 .beschrijving {
     margin: 0.2rem 0;
     margin-top: 0.4rem;
-    color: rgba(0,0,0,0.6);
+    color: rgba(0, 0, 0, 0.6);
     font-size: 14px;
 }
 
@@ -149,7 +150,7 @@ form {
     transition: all 0.2s;
     background-color: var(--higlight-color);
     color: white;
-    box-shadow: 0 6px 8px 2px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 8px 2px rgba(0, 0, 0, 0.3);
 }
 
 .active {
@@ -160,7 +161,7 @@ form {
     width: 50%;
     margin-left: 25%;
 
-    box-shadow: 0 4px 4px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
     border-radius: 1rem 1rem 0.2rem 0.2rem;
     outline: none;
     background-color: var(--higlight-color-light);
@@ -261,12 +262,15 @@ form {
     .behandeling {
         width: calc(50% - 1rem);
     }
+
     #prijslijst {
         margin: 0;
     }
+
     #contact-info {
         width: 75%;
     }
+
     .collapsible, .active {
         width: 60%;
         margin-left: 20%;
@@ -277,16 +281,20 @@ form {
     .behandeling {
         width: 100%;
     }
+
     form {
         max-width: calc(min(1200px, 100% - 4rem));
         padding: 0.5rem 2rem;
     }
+
     #time-select li {
         width: calc(25% - 1rem);
     }
+
     #contact-info {
         width: 100%;
     }
+
     .collapsible, .active {
         width: 75%;
         margin-left: 12.5%;
@@ -297,22 +305,27 @@ form {
     #prijslijst {
         margin: 0;
     }
+
     #afspraak-div {
         margin: 4rem 0;
         padding: 0.5rem 1rem;
     }
+
     :root {
         --font-large: 24px;
         --font-med: 20px;
         --font-small: 16px;
     }
+
     #time-select li {
         width: calc(33.33% - 1rem);
     }
+
     form {
         max-width: calc(min(1200px, 100% - 1rem));
         padding: 0.5rem 1rem;
     }
+
     .collapsible, .active {
         width: 90%;
         margin-left: 5%;
@@ -326,6 +339,7 @@ form {
         --font-med: 16px;
         --font-small: 14px;
     }
+
     form {
         max-width: 100%;
         padding: 0.5rem 0.25rem;

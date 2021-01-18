@@ -4,7 +4,7 @@ let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
 let currentDay = today.getDay();
 
-const months = ["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"];
+const months = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"];
 
 changeCalendar(currentMonth, currentYear);
 
@@ -26,7 +26,7 @@ function previous() {
 }
 
 function changeCalendar(month, year) {
-    let date = `1-${month+1}-${year}`;
+    let date = `1-${month + 1}-${year}`;
     let url = `DBjs.php?t=3&d=${date}`;
 
     fetch(url)
@@ -53,12 +53,9 @@ function renderCalendar(month, year, monthdays) {
                 cellText = document.createTextNode("");
                 cell.appendChild(cellText);
                 row.appendChild(cell);
-            }
-            else if (date > daysInMonth(month, year)) {
+            } else if (date > daysInMonth(month, year)) {
                 break;
-            }
-
-            else {
+            } else {
                 let cellOuter = document.createElement("td");
                 let cell = document.createElement("input");
                 cell.setAttribute("type", "button");
@@ -69,13 +66,12 @@ function renderCalendar(month, year, monthdays) {
                 cell.setAttribute("id", cellId);
                 if (cellOpen) { // indien er vandaag openingstijden zijn
                     cell.setAttribute("class", "dateCellOpen");
-                    cell.addEventListener("click", function(){
+                    cell.addEventListener("click", function () {
                         getDate(year, month + 1, cellId);
                         currentDay = cellId;
                         setSelected(cellId);
                     })
-                }
-                else {
+                } else {
                     cell.setAttribute("class", "dateCellClosed");
                     cell.setAttribute("disabled", "");
                 }
@@ -90,8 +86,7 @@ function renderCalendar(month, year, monthdays) {
     }
 }
 
-function daysInMonth(iMonth, iYear)
-{
+function daysInMonth(iMonth, iYear) {
     let tempDate = new Date(iYear, iMonth, 32).getDate();
     return 32 - tempDate;
 }
@@ -111,15 +106,16 @@ function forEachDatecell(func) {
         }
     }
 }
+
 // update welke cell er geselecteerd staat zodat deze met CSS kan worden gemarkeerd
 // overzichtelijker dan '7 februari' uitschrijven en de gebruiker laten lezen
 function setSelected(id) {
-    forEachDatecell(function(cell){
+    forEachDatecell(function (cell) {
         if (cell.id === id) {
             console.log(id)
             cell.classList.add('selected');
-        }
-        else cell.classList.remove('selected');
+        } else cell.classList.remove('selected');
     });
 }
+
 initCalendarButtons();

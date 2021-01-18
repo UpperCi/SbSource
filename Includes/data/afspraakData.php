@@ -20,6 +20,7 @@ function afspraakAssoc(PDO $conn, int $status): array
     $statement->execute([":status" => $status]);
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
+
 # wordt in de admin-interface gebruikt voor de pending afspraken
 /**
  * @param $af
@@ -42,6 +43,7 @@ function quickAfspraakHTML($af): string
                 </div>";
     return $afHTML;
 }
+
 # recursive zodat je niet een id kan krijgen dat al bestaat
 /**
  * @param PDO $connection
@@ -65,14 +67,15 @@ function createTrackId(PDO $connection): string
  * @param PDO $connection
  * @return array|false
  */
-function getByTrackId($id, PDO $connection) {
+function getByTrackId($id, PDO $connection)
+{
     $statement = $connection->prepare("SELECT * FROM afspraken WHERE tracker_id=:trackId");
     $statement->execute([':trackId' => $id]);
     if ($statement->rowCount() == 1) {
         return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-    else return false;
+    } else return false;
 }
+
 # alles nodig om een afspraak aan de database toe te voegen in één functie!
 /**
  * @param $af
@@ -114,6 +117,7 @@ function addAfspraak($af, PDO $connection): string
     ]);
     return $tracking;
 }
+
 # maak een ICS-bestand aan op basis van een afspraak
 # wordt opgeslagen in Includes/private/data/{tracker_id}.ics
 # https://github.com/jasvrcek/ICS gebruikt
@@ -141,7 +145,7 @@ function createAfspraakICS($conn, $af): string
 
     $calendar = new Calendar();
     $calendar->setProdId('//Surely Beauty//Afspraken//NL')
-    ->addEvent($eventOne);
+        ->addEvent($eventOne);
 
     $calendarExport = new CalendarExport(new CalendarStream, new Formatter());
     $calendarExport->addCalendar($calendar);
@@ -160,7 +164,7 @@ function createAfspraakICS($conn, $af): string
  */
 function getStatus($stat): string
 {
-    switch($stat) {
+    switch ($stat) {
         case 1:
             return "Geaccepteerd";
         case 2:

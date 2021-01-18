@@ -16,7 +16,8 @@ require_once "Includes/init.php";
     </div>
     <div class="login-field">
         <label for="pass">Wachtwoord</label>
-        <input id="pass" type="password" value="" name="pass" placeholder="wachtwoord">
+        <input id="pass" type="password" value="" name="pass"
+               placeholder="wachtwoord">
     </div>
     <div id="login-div">
         <input type="submit" name="submit" value="Log In">

@@ -2,9 +2,9 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION = @@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
 --
@@ -20,10 +20,11 @@ SET time_zone = "+00:00";
 --
 
 DROP TABLE IF EXISTS `openingstijden`;
-CREATE TABLE IF NOT EXISTS `openingstijden` (
-    `id` int unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `openingstijden`
+(
+    `id`    int unsigned NOT NULL AUTO_INCREMENT,
     `start` int unsigned NOT NULL, # dit zou nog na 2038 moeten werken omdat het unsigned is
-    `end` int unsigned NOT NULL,
+    `end`   int unsigned NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -31,13 +32,14 @@ CREATE TABLE IF NOT EXISTS `openingstijden` (
 # (1, 1609407543, 1609407543)
 
 DROP TABLE IF EXISTS `behandelingen`;
-CREATE TABLE IF NOT EXISTS `behandelingen` (
-    `id` int unsigned NOT NULL AUTO_INCREMENT,
-    `name` varchar(100) NOT NULL,
+CREATE TABLE IF NOT EXISTS `behandelingen`
+(
+    `id`     int unsigned NOT NULL AUTO_INCREMENT,
+    `name`   varchar(100) NOT NULL,
     `length` int unsigned,
-    `desc` varchar(255),
-    `price` int unsigned,
-    `cat` int unsigned,
+    `desc`   varchar(255),
+    `price`  int unsigned,
+    `cat`    int unsigned,
     PRIMARY KEY (`id`)
 );
 
@@ -54,34 +56,37 @@ CREATE TABLE IF NOT EXISTS `behandelingen` (
 # (10, 'Wimpers verven', null, null, 12, 2);
 
 DROP TABLE IF EXISTS `categorieen`;
-CREATE TABLE IF NOT EXISTS `categorieen` (
-     `id` int unsigned NOT NULL AUTO_INCREMENT,
-     `name` varchar(100) NOT NULL,
-     `display_order` int unsigned NOT NULL,
-     PRIMARY KEY (`id`)
+CREATE TABLE IF NOT EXISTS `categorieen`
+(
+    `id`            int unsigned NOT NULL AUTO_INCREMENT,
+    `name`          varchar(100) NOT NULL,
+    `display_order` int unsigned NOT NULL,
+    PRIMARY KEY (`id`)
 );
 # INSERT INTO `categorieen` VALUES
 # (1 , 'Gezichtsbehandelingen', 1),
 # (2 , 'Losse Behandelingen', 2);
 
 DROP TABLE IF EXISTS `afspraken`;
-CREATE TABLE IF NOT EXISTS `afspraken` (
-    `id` int unsigned NOT NULL AUTO_INCREMENT,
-    `start` int unsigned NOT NULL,
-    `end` int unsigned NOT NULL,
-    `behandel_id` varchar(50) NOT NULL, # "3,102,13"
-    `tracker_id` varchar(8) NOT NULL, # zodat je niet id's van andere afspraken kan gokken
-    `email` varchar(320) NOT NULL,
-    `tel` varchar(15) NOT NULL,
-    `status` tinyint unsigned, # 0=niet bekeken, 1=geaccepteert, 2=afgewezen
+CREATE TABLE IF NOT EXISTS `afspraken`
+(
+    `id`          int unsigned NOT NULL AUTO_INCREMENT,
+    `start`       int unsigned NOT NULL,
+    `end`         int unsigned NOT NULL,
+    `behandel_id` varchar(50)  NOT NULL, # "3,102,13"
+    `tracker_id`  varchar(8)   NOT NULL, # zodat je niet id's van andere afspraken kan gokken
+    `email`       varchar(320) NOT NULL,
+    `tel`         varchar(15)  NOT NULL,
+    `status`      tinyint unsigned,      # 0=niet bekeken, 1=geaccepteert, 2=afgewezen
     PRIMARY KEY (`id`)
 );
 
 DROP TABLE IF EXISTS `admin_accounts`;
-CREATE TABLE IF NOT EXISTS `admin_accounts` (
-    `id` int unsigned NOT NULL AUTO_INCREMENT,
-    `email` varchar(320) NOT NULL,
-    `pass` varchar(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS `admin_accounts`
+(
+    `id`           int unsigned NOT NULL AUTO_INCREMENT,
+    `email`        varchar(320) NOT NULL,
+    `pass`         varchar(255) NOT NULL,
     `add_accounts` boolean,
     PRIMARY KEY (`id`)
 );

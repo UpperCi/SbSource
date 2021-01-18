@@ -47,11 +47,12 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
                     <select id="time-repeat-type">
                         <option value="d">dag</option>
                         <option value="w">week</option>
-<!--                        <option value="m">maand</option>-->
+                        <!--                        <option value="m">maand</option>-->
                     </select>
                     <p class="time-desc">voor</p>
                     <input type="number" id="time-repeat-amount">
-                    <label class="time-desc" for="time-repeat-amount">keer</label>
+                    <label class="time-desc"
+                           for="time-repeat-amount">keer</label>
                 </div>
 
             </div>
@@ -81,7 +82,7 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
         <div id="afspraak-pending">
             <h2>In Afwachting</h2>
             <div id="pending-content">
-                <?php foreach($pending as $afspraak){ ?>
+                <?php foreach ($pending as $afspraak) { ?>
                     <?= quickAfspraakHTML($afspraak); ?>
                 <?php } ?>
             </div>

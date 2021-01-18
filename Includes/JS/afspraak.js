@@ -30,6 +30,7 @@ function radioChange() {
         }
     }
 }
+
 // maakt een [11:30] knop en voegt het toe aan #time-select (11:30 is dynamisch, uiteraard)
 function createTimeRadio(time) {
     let timeDate = new Date(time * 1000);
@@ -56,6 +57,7 @@ function createTimeRadio(time) {
     listItem.appendChild(label);
     document.getElementById("time-select").appendChild(listItem);
 }
+
 // voegt de knoppen toe om te kiezen hoe laat je een afspraak wilt maken
 function upDate(open) {
     const timeInterval = 1800; // hoeveel seconden moeten er tussen elke twee knoppen zitten
@@ -81,6 +83,7 @@ function upDate(open) {
         console.log(`Op ${start.getDate()} ${months[start.getMonth()]} open van ${start.getHours()} tot ${end.getHours()}`)
     }
 }
+
 // func(checkbox, behandeling) wordt op elke behandeling-checkbox uitgevoerd
 function forEachCheck(func) {
     let behandelingen = document.getElementsByClassName("behandeling");
@@ -95,9 +98,10 @@ function forEachCheck(func) {
         }
     }
 }
+
 // geef element aan om met CSS te markeren
 function checkChange() {
-    forEachCheck(function(check, checkParent){
+    forEachCheck(function (check, checkParent) {
         if (check.checked) {
             checkParent.classList.add("selected");
         } else {
@@ -105,9 +109,10 @@ function checkChange() {
         }
     });
 }
+
 // initialize afspraak-checkbox eventListeners
 function initChecks() {
-    forEachCheck(function(check){
+    forEachCheck(function (check) {
         check.addEventListener("change", checkChange);
     });
 }

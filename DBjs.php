@@ -5,10 +5,11 @@
 require_once "Includes/init.php";
 require_once "Includes/loginValidation.php";
 
-function returnIfValid($connection, $query) {
+function returnIfValid($connection, $query)
+{
     $result = $connection->query($query)
-    ->fetchAll(PDO::FETCH_ASSOC);
-    if ($result != FALSE){
+        ->fetchAll(PDO::FETCH_ASSOC);
+    if ($result != FALSE) {
         return $result;
     }
     return false;
@@ -26,7 +27,7 @@ function returnIfValid($connection, $query) {
  * 8 -> verwijder alle openingstijden van één dag [admin] | start = date-string
  * */
 
-if (isset($_GET['t'])){
+if (isset($_GET['t'])) {
     switch ($_GET['t']) {
         case 0: // haal afspraken op
             if (checkLogin($connection, $_GET)) {
@@ -85,8 +86,7 @@ if (isset($_GET['t'])){
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                 if (count($result) > 0) {
                     array_push($isOpen, true);
-                }
-                else {
+                } else {
                     array_push($isOpen, false);
                 }
             }
@@ -119,7 +119,7 @@ if (isset($_GET['t'])){
             }
             break;
         case 6: // voeg een timeslot toe
-            if (checkLogin($connection,$_GET)) {
+            if (checkLogin($connection, $_GET)) {
                 $start = intval($_GET['start']);
                 $end = intval($_GET['end']);
                 $statement = $connection->prepare(" INSERT INTO
@@ -129,7 +129,7 @@ if (isset($_GET['t'])){
                     ':end' => $end]);
             }
         case 7: // voeg een herhalende timeslot toe
-            if (checkLogin($connection,$_GET)) {
+            if (checkLogin($connection, $_GET)) {
                 $start = intval($_GET['start']);
                 $end = intval($_GET['end']);
                 $statement = $connection->prepare(" INSERT INTO
@@ -137,7 +137,7 @@ if (isset($_GET['t'])){
                 $repeatCount = intval($_GET['rCount']);
                 switch ($_GET['rType']) {
                     case 'd': // herhaal elke dag
-                        foreach(range(0, $repeatCount - 1) as $i) {
+                        foreach (range(0, $repeatCount - 1) as $i) {
                             $timeStampAdd = $i * 86400;
                             $statement->execute([
                                 ':start' => $start + $timeStampAdd,
@@ -146,7 +146,7 @@ if (isset($_GET['t'])){
                         }
                         break;
                     case 'w': // herhaal elke week
-                        foreach(range(0, $repeatCount - 1) as $i) {
+                        foreach (range(0, $repeatCount - 1) as $i) {
                             $timeStampAdd = $i * 86400 * 7;
                             $statement->execute([
                                 ':start' => $start + $timeStampAdd,
@@ -155,7 +155,7 @@ if (isset($_GET['t'])){
                         }
                         break;
                     case 'm': // herhaal elke maand
-                        foreach(range(0, $repeatCount - 1) as $i) {
+                        foreach (range(0, $repeatCount - 1) as $i) {
                             $newStart = date_add(date_create($start), date_interval_create_from_date_string("${$i} months"));
                             $newEnd = date_add(date_create($end), date_interval_create_from_date_string("${$i} months"));
                             $statement->execute([

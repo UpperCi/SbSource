@@ -9,18 +9,18 @@
     padding: 0.8rem 0.5rem;
 }
 
-#socials :last-child{
+#socials :last-child {
     margin-right: 0.2rem;
 }
 
 .social-link {
     transition: all 0.2s;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
 }
 
-.social-link:hover{
+.social-link:hover {
     transition: all 0.2s;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 footer {

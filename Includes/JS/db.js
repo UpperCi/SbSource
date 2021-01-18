@@ -1,8 +1,7 @@
-
 // update de status van een afspraak in de database
 function updateStatus(id, newStatus) {
     let request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
+    request.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             console.log(`afspraak ${id} gezet naar status ${newStatus}`);
         }
@@ -11,6 +10,7 @@ function updateStatus(id, newStatus) {
     request.open("GET", getUrl, true);
     request.send();
 }
+
 // geef de afspraak- accept en deny-knoppen functionaliteit
 function initAfspraken() {
     let afspraken = document.getElementsByClassName("afspraak");
@@ -19,17 +19,18 @@ function initAfspraken() {
         let afId = afspraken[i].id;
         let afNumericId = afId.split('_')[1];
         let acceptBtn = afspraken[i].getElementsByClassName("afspraak-accept")[0];
-        acceptBtn.addEventListener("click", function(){
+        acceptBtn.addEventListener("click", function () {
             updateStatus(afNumericId, 1); // update afspraak-status -> 1 = geaccepteerd
             document.getElementById(afId).remove();
         });
         let denyBtn = afspraken[i].getElementsByClassName("afspraak-deny")[0];
-        denyBtn.addEventListener("click", function(){
+        denyBtn.addEventListener("click", function () {
             updateStatus(afNumericId, 2); // update afspraak-status -> 2 = geweigerd
             document.getElementById(afId).remove();
         });
     }
 }
+
 // geeft string terug op basis van timestamp; 11:45
 function getTimeDisplay(time) {
     let timeDate = new Date(time * 1000);
@@ -59,17 +60,17 @@ function createAfLink(afObj) {
     let tracker = afObj['tracker_id'];
     let url = 'afspraakTracker.php?af=' + tracker;
 
-    afLink.appendChild(quickElement('p','afspraak-periode',disp));
+    afLink.appendChild(quickElement('p', 'afspraak-periode', disp));
 
-    let mailLink = quickElement('a','afspraak-email','');
-    mailLink.setAttribute('href',`mailto:${afObj['email']}`);
+    let mailLink = quickElement('a', 'afspraak-email', '');
+    mailLink.setAttribute('href', `mailto:${afObj['email']}`);
     mailLink.innerHTML = "<i class='far fa-envelope'></i>";
 
     afLink.appendChild(mailLink);
 
-    let details = quickElement('a','afspraak-link','details');
+    let details = quickElement('a', 'afspraak-link', 'details');
 
-    details.setAttribute('href',url);
+    details.setAttribute('href', url);
     details.innerHTML = "<i class='fas fa-info-circle'></i>";
     afLink.appendChild(details);
 
@@ -88,7 +89,7 @@ function updateAfspraken(af) {
 async function delDate(id) {
     let url = `DBjs.php?t=1&tId=${parseInt(id.split('_')[1])}&user=${USER}&pass=${PASS}`;
     await fetch(url)
-        .then(function() {
+        .then(function () {
             changeCalendar(currentMonth, currentYear);
         });
 
@@ -100,15 +101,15 @@ function upDate(open) {
 
     for (let i = 0; i < open.length; i++) {
         let t = open[i];
-        let timePeriod = getPeriodDisplay(parseInt(t['start']),parseInt(t['end']));
+        let timePeriod = getPeriodDisplay(parseInt(t['start']), parseInt(t['end']));
 
-        let cal = quickElement('div','cal-timeslot-in','');
-        cal.appendChild(quickElement('p','cal-timeslot-display', timePeriod));
+        let cal = quickElement('div', 'cal-timeslot-in', '');
+        cal.appendChild(quickElement('p', 'cal-timeslot-display', timePeriod));
 
-        let calDel = quickElement('i',"far",'');
+        let calDel = quickElement('i', "far", '');
         calDel.classList.add('fa-trash-alt');
         calDel.id = "open_" + t['id'];
-        calDel.addEventListener('click', function(){
+        calDel.addEventListener('click', function () {
             delDate(calDel.id);
             cal.remove();
         })
@@ -118,6 +119,7 @@ function upDate(open) {
         document.getElementById("timeslot-overzicht").appendChild(cal);
     }
 }
+
 // haal afspraken van bepaalde dag op
 async function updateAfspraakData(year, month, day) {
     let date = `${day}-${month}-${year}`;
@@ -127,6 +129,7 @@ async function updateAfspraakData(year, month, day) {
         .then(response => response.json())
         .then(data => updateAfspraken(data));
 }
+
 // haal openingstijden van bepaalde dag op
 async function updateOpeningstijdData(year, month, day) {
     let date = `${day}-${month}-${year}`;
@@ -141,7 +144,7 @@ async function delOpen(year, month, day) {
     let date = `${day}-${month}-${year}`;
     let url = `DBjs.php?t=8&d=${date}&user=${USER}&pass=${PASS}`;
     await fetch(url)
-        .then(function(){
+        .then(function () {
             changeCalendar(currentMonth, currentYear);
         });
 }
@@ -149,13 +152,13 @@ async function delOpen(year, month, day) {
 async function getDate(year, month, day) {
     if (document.getElementById('do-erase').checked) {
         await delOpen(year, month, day);
-    }
-    else {
+    } else {
         await updateAfspraakData(year, month, day);
         await updateOpeningstijdData(year, month, day);
     }
     return 1;
 }
+
 // voer een fetch uit met get-variabelen om een openingstijd toe te voegen aan de db
 async function addOpen(date, start, end) {
     let startTime = new Date(date + ' ' + start).getTime() / 1000;
@@ -176,7 +179,7 @@ async function addOpenRepeat(date, start, end, rType, rCount) {
 }
 
 // voert JS-fetch uit om nieuwe afspraak toe te voegen
-async function addPress(){
+async function addPress() {
     let repeatCheckbox = document.getElementById('do-repeat');
     let start = document.getElementById('time-start').value;
     let end = document.getElementById('time-end').value;
@@ -185,8 +188,7 @@ async function addPress(){
         let repeatType = document.getElementById('time-repeat-type').value;
         let repeatCount = document.getElementById('time-repeat-amount').value;
         await addOpenRepeat(date, start, end, repeatType, repeatCount);
-    }
-    else await addOpen(date, start, end);
+    } else await addOpen(date, start, end);
 }
 
 // voeg of haal de deleter class weg bij alle datecells
@@ -194,13 +196,13 @@ function updateErase() {
     let eraser = document.getElementById('do-erase-label');
     if (document.getElementById('do-erase').checked) {
         eraser.classList.add('selected');
-        forEachDatecell(function(cell){
+        forEachDatecell(function (cell) {
             cell.classList.add('deleter');
             cell.classList.remove('selected');
         });
     } else {
         eraser.classList.remove('selected');
-        forEachDatecell(function(cell){
+        forEachDatecell(function (cell) {
             cell.classList.remove('deleter');
         });
     }
@@ -213,16 +215,16 @@ function updateErase() {
 
 // init eventlistener voor de gum
 function initErase() {
-    document.getElementById('do-erase').addEventListener('change', function(){
+    document.getElementById('do-erase').addEventListener('change', function () {
         updateErase();
     });
 }
 
 // eventlistener aan openingstijd-add-knop
 function initAdder() {
-    document.getElementById('afpsraak-adder-btn').addEventListener("click", async function(){
+    document.getElementById('afpsraak-adder-btn').addEventListener("click", async function () {
         await addPress()
-            .then(function(){
+            .then(function () {
                 changeCalendar(currentMonth, currentYear);
             });
     });
@@ -231,25 +233,27 @@ function initAdder() {
 // laat de repeat-afspraak div zien of niet op basis van de repeat knop
 function initRepeat() {
     let repeatCheckbox = document.getElementById('do-repeat');
-    repeatCheckbox.addEventListener("change", function(){
+    repeatCheckbox.addEventListener("change", function () {
         if (repeatCheckbox.checked) {
             document.getElementById('repeat-div').style.display = 'flex';
             document.getElementById('do-repeat-label').classList.add('selected');
-        }
-        else {
+        } else {
             document.getElementById('repeat-div').style.display = 'none';
             document.getElementById('do-repeat-label').classList.remove('selected');
-        }});
+        }
+    });
 }
 
 function changeCalendar(month, year) {
-    let date = `1-${month+1}-${year}`;
+    let date = `1-${month + 1}-${year}`;
     let url = `DBjs.php?t=3&d=${date}`;
 
     fetch(url)
         .then(response => response.json())
         .then(data => renderCalendar(month, year, data))
-        .then(function(){updateErase()});
+        .then(function () {
+            updateErase()
+        });
 }
 
 initAfspraken();

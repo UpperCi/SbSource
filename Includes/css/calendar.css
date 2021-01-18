@@ -13,7 +13,7 @@ td {
     padding: 0;
 }
 
-input:disabled{
+input:disabled {
     color: rgba(0, 0, 0, 0.3);
 }
 
@@ -26,6 +26,7 @@ input:disabled{
     border: 0;
     background-color: white;
 }
+
 .dateCellClosed {
     cursor: not-allowed;
 }
@@ -79,13 +80,13 @@ input:disabled{
     background-color: var(--higlight-color-light);
 
     border: 0;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 
     transition: all 0.2s;
 }
 
 #kalender-btns input:hover, #kalender-btns input:focus {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
     outline: 0;
 }
 

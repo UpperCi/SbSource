@@ -23,7 +23,9 @@ $behandelingen = behandelAssoc($connection);
                     3068HM
                 </h3>
                 <div id="location-btn">
-                    <a href="afspraak.php"><button>Maak een afspraak</button></a>
+                    <a href="afspraak.php">
+                        <button>Maak een afspraak</button>
+                    </a>
                 </div>
             </div>
             <div id="location-img" class="">
@@ -37,10 +39,10 @@ $behandelingen = behandelAssoc($connection);
     </div>
 
     <div id="prijslijst">
-        <?php foreach ($behandelingen as $catNaam => $categorie){?>
+        <?php foreach ($behandelingen as $catNaam => $categorie) { ?>
             <button type="button" class="collapsible"><?= $catNaam ?></button>
             <div class="behandel-sectie">
-                <?php foreach($categorie as $behandeling) { ?>
+                <?php foreach ($categorie as $behandeling) { ?>
                     <div class="behandeling">
                         <?= behandelHTML($behandeling); ?>
                     </div>

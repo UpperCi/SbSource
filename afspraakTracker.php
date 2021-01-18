@@ -31,8 +31,8 @@ $ICSurl = createAfspraakICS($connection, $info);
         <div id="afspraak-behandelingen">
             <h3>Behandelingen:</h3>
             <ul>
-                <?php foreach($behandelingen as $behandeling) { ?>
-                    <li><?=$behandeling; ?></li>
+                <?php foreach ($behandelingen as $behandeling) { ?>
+                    <li><?= $behandeling; ?></li>
                 <?php } ?>
             </ul>
         </div>
@@ -47,12 +47,13 @@ $ICSurl = createAfspraakICS($connection, $info);
             </div>
         </div>
         <div id="afspraak-download">
-            <a href="<?= $ICSurl ?>"><i class="far fa-calendar-alt"></i> Zet in Agenda</a>
+            <a href="<?= $ICSurl ?>"><i class="far fa-calendar-alt"></i> Zet in
+                Agenda</a>
         </div>
     </div>
 </main>
 
 <!--<footer>-->
-<!--    --><?//= file_get_contents("Includes/footer.html"); ?>
+<!--    --><? //= file_get_contents("Includes/footer.html"); ?>
 <!--</footer>-->
 </body>

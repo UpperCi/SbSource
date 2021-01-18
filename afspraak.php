@@ -30,19 +30,24 @@ if (isset($_POST['submit'])) {
         <?= file_get_contents("Includes/html/calendar.html") ?>
     </div>
     <h2 id="afspraak-selected-date"></h2>
-    <p class="error" id="time-error"><?= arrIfSet($errs,'time'); ?></p>
+    <p class="error" id="time-error"><?= arrIfSet($errs, 'time'); ?></p>
     <ul id="time-select">
     </ul>
-    <p class="error" id="behandel-error"><?= arrIfSet($errs,'behandelingen'); ?></p>
+    <p class="error"
+       id="behandel-error"><?= arrIfSet($errs, 'behandelingen'); ?></p>
     <div id="behandel-selectie">
 
-        <?php foreach ($behandelingen as $catNaam => $categorie){?>
+        <?php foreach ($behandelingen as $catNaam => $categorie) { ?>
             <button type="button" class="collapsible"><?= $catNaam ?></button>
             <div class="behandel-sectie">
-                <?php foreach($categorie as $behandeling) { ?>
-                    <label class="behandeling" for=<?= "behandeling_{$behandeling['id']}" ?>>
+                <?php foreach ($categorie as $behandeling) { ?>
+                    <label class="behandeling"
+                           for=<?= "behandeling_{$behandeling['id']}" ?>>
                         <?= behandelHTML($behandeling); ?>
-                        <input type="checkbox" id=<?= "behandeling_{$behandeling['id']}" ?> class="behandel-check" name="behandelingen[]" value="<?= $behandeling['id']; ?>">
+                        <input type="checkbox"
+                               id=<?= "behandeling_{$behandeling['id']}" ?> class="behandel-check"
+                               name="behandelingen[]"
+                               value="<?= $behandeling['id']; ?>">
                     </label>
                 <?php } ?>
             </div>
@@ -50,12 +55,13 @@ if (isset($_POST['submit'])) {
     </div>
 
     <div id="contact-info">
-        <p class="error" id="email-error"><?= arrIfSet($errs,'email'); ?></p>
+        <p class="error" id="email-error"><?= arrIfSet($errs, 'email'); ?></p>
         <label for="e-mailIn">
-            <input type="email" name="e-mail" id="e-mailIn" placeholder="e-mail">
+            <input type="email" name="e-mail" id="e-mailIn"
+                   placeholder="e-mail">
         </label>
 
-        <p class="error" id="tel-error"><?= arrIfSet($errs,'phone'); ?></p>
+        <p class="error" id="tel-error"><?= arrIfSet($errs, 'phone'); ?></p>
         <label for="telIn">
             <input type="tel" name="phone" id="telIn" placeholder="tel">
         </label>
