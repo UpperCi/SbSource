@@ -26,7 +26,9 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
 <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    <?= file_get_contents("Includes/html/calendar.html") ?>
+    <div id="kalendar-container">
+        <?= file_get_contents("Includes/html/calendar.html") ?>
+    </div>
     <h2 id="afspraak-selected-date"></h2>
     <p class="error" id="time-error"><?= arrIfSet($errs,'time'); ?></p>
     <ul id="time-select">

@@ -35,7 +35,7 @@ if (isset($_GET['t'])){
                 $endTime = $startTime + 86400;
 
                 $statement = $connection->prepare
-                ("SELECT * FROM afspraken WHERE start > :start AND end < :end");
+                ("SELECT * FROM afspraken WHERE start > :start AND end < :end AND status = 1 ORDER BY start");
                 $statement->execute([
                     ':start' => $startTime,
                     ':end' => $endTime

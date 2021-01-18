@@ -27,7 +27,8 @@ function afspraakAssoc(PDO $conn, int $status): array
  */
 function quickAfspraakHTML($af): string
 {
-    $afHTML = "<div class='afspraak' id='{$af['id']}'>";
+    $id = 'afs_' . $af['id'];
+    $afHTML = "<div class='afspraak' id='{$id}'>";
     if (isset($af['email'])) {
         $afHTML .= "<a class='afspraak-email'>{$af['email']}</a>";
     }

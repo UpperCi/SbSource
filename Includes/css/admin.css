@@ -15,13 +15,43 @@ aside {
 
 .overzicht {
     flex: 1;
+    border-radius: 1rem;
+    padding: 1rem 0;
+    margin: 1rem;
 }
 
-#kalendar-container {
-    background-color: white;
+.adminComp, #kalendar-container {
     box-shadow: 0 6px 8px rgba(0,0,0,0.4);
     border-radius: 1rem;
     padding: 2rem;
+}
+
+.afspraak-overzicht-container {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--higlight-color);
+    width: -moz-max-content;
+    width: max-content;
+    min-width: 75%;
+    height: fit-content;
+    margin: 1rem auto;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.afspraak-periode, .afspraak-email, .afspraak-link {
+    margin: 0.5rem 0.2rem;
+    color: white;
+    font-size: var(--font-med);
+
+}
+
+.afspraak-email, .afspraak-link {
+    color: rgba(255,255,255,0.8);
+    transition: color 0.2s;
+}
+
+.afspraak-email:hover, .afspraak-link:hover {
+    color: white;
 }
 
 h2 {
@@ -36,10 +66,6 @@ h2 {
 
 
     background-color: var(--higlight-color-light);
-    box-shadow: 0 6px 8px rgba(0,0,0,0.4);
-    border-radius: 1rem;
-    padding: 1rem;
-
 }
 
 #afpsraak-adder-btn {
@@ -65,11 +91,60 @@ h2 {
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-#do-repeat-label {
+#do-erase-label {
+    color: black;
+    background-color: var(--higlight-color-light);
+    font-size: var(--font-large);
+    height: fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    border-radius: 50%;
+    padding: 0.75rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 
+    transition: all 0.2s;
+}
+
+#do-erase-label:hover {
+    color: white;
+    background-color: var(--higlight-color);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+#do-erase-label.selected {
+    background-color: var(--higlight-color-dark) !important;
+    color: white;
+    border-radius: 25%;
+}
+
+#do-repeat-label {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+    max-width: fit-content !important;
+    cursor: pointer;
+
+    transition: all 0.2s, border-radius 0.5s;
+}
+
+#do-repeat-label.selected {
+    background-color: var(--higlight-color);
+    color: white;
+}
+
+#do-repeat-label:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+#do-repeat-label.selected:hover {
+    background-color: var(--higlight-color-dark);
 }
 
 #kalendar-container {
+    background-color: white;
     width: -moz-fit-content;
     width: fit-content;
     margin: auto;
@@ -80,7 +155,7 @@ h2 {
 }
 
 #repeat-full {
-    width: -moz-fit-conte   nt;
+    width: -moz-fit-content;
     width: fit-content;
     margin: 1rem auto auto;
 }
@@ -93,15 +168,12 @@ h2 {
 
 #afspraak-overzicht {
     float: right;
-    background-color: white;
-    box-shadow: 0 6px 8px rgba(0,0,0,0.4);
     border-radius: 1rem 0 0 1rem;
-    padding: 2rem;
+    background-color: white;
 
     height: fit-content;
     width: -moz-fit-content;
     width: fit-content;
-
 }
 
 .time-desc, #time-repeat-type, #time-repeat-amount, #do-repeat-label {
@@ -112,6 +184,21 @@ h2 {
 
 #time-repeat-amount {
     /*max-w*/
+}
+
+.dateCellOpen.deleter:hover, .dateCellOpen.deleter:focus {
+    background-color: rgba(255,0,0,0.6);
+    color: white;
+    outline: none;
+    border-radius: 50%;
+    transition: background-color 0.1s, border-radius 0.3s, color 0.1s;
+}
+
+.dateCellOpen.deleter.selected {
+    background-color: rgba(255,0,0,0.8);
+    color: white;
+    border-radius: 25%;
+    transition: background-color 0.2s, border-radius 0.7s;
 }
 
 [id*='time-'] {

@@ -17,19 +17,20 @@ function initAfspraken() {
 
     for (let i = 0; i < afspraken.length; i++) {
         let afId = afspraken[i].id;
+        let afNumericId = afId.split('_')[1];
         let acceptBtn = afspraken[i].getElementsByClassName("afspraak-accept")[0];
         acceptBtn.addEventListener("click", function(){
-            updateStatus(afId, 1); // update afspraak-status -> 1 = geaccepteerd
+            updateStatus(afNumericId, 1); // update afspraak-status -> 1 = geaccepteerd
             document.getElementById(afId).remove();
         });
         let denyBtn = afspraken[i].getElementsByClassName("afspraak-deny")[0];
         denyBtn.addEventListener("click", function(){
-            updateStatus(afId, 2); // update afspraak-status -> 2 = geweigerd
+            updateStatus(afNumericId, 2); // update afspraak-status -> 2 = geweigerd
             document.getElementById(afId).remove();
         });
     }
 }
-
+// geeft string terug op basis van timestamp; 11:45
 function getTimeDisplay(time) {
     let timeDate = new Date(time * 1000);
     let timeMin = timeDate.getMinutes() === 0 ? '00' : timeDate.getMinutes();
@@ -52,15 +53,24 @@ function quickElement(elTag, elClass, elText) {
 function createAfLink(afObj) {
     let afLink = document.createElement("div");
     afLink.classList.add('afspraak-overzicht-container');
+    afLink.classList.add('adminComp');
 
     let disp = getPeriodDisplay(afObj['start'], afObj['end']);
     let tracker = afObj['tracker_id'];
     let url = 'afspraakTracker.php?af=' + tracker;
 
     afLink.appendChild(quickElement('p','afspraak-periode',disp));
-    afLink.appendChild(quickElement('p','afspraak-email',afObj['email']));
+
+    let mailLink = quickElement('a','afspraak-email','');
+    mailLink.setAttribute('href',`mailto:${afObj['email']}`);
+    mailLink.innerHTML = "<i class='far fa-envelope'></i>";
+
+    afLink.appendChild(mailLink);
+
     let details = quickElement('a','afspraak-link','details');
+
     details.setAttribute('href',url);
+    details.innerHTML = "<i class='fas fa-info-circle'></i>";
     afLink.appendChild(details);
 
     document.getElementById('afspraken').appendChild(afLink);
@@ -76,11 +86,13 @@ function updateAfspraken(af) {
 }
 
 async function delDate(id) {
-    let url = `DBjs.php?t=1&tId=${id}&user=${USER}&pass=${PASS}`;
-    await fetch(url);
+    let url = `DBjs.php?t=1&tId=${parseInt(id.split('_')[1])}&user=${USER}&pass=${PASS}`;
+    await fetch(url)
+        .then(function() {
+            changeCalendar(currentMonth, currentYear);
+        });
 
     console.log(`verwijderen van timeslot ${id}`);
-    changeCalendar(currentMonth, currentYear);
 }
 
 function upDate(open) {
@@ -95,7 +107,7 @@ function upDate(open) {
 
         let calDel = quickElement('i',"far",'');
         calDel.classList.add('fa-trash-alt');
-        calDel.id = t['id'];
+        calDel.id = "open_" + t['id'];
         calDel.addEventListener('click', function(){
             delDate(calDel.id);
             cal.remove();
@@ -128,7 +140,10 @@ async function updateOpeningstijdData(year, month, day) {
 async function delOpen(year, month, day) {
     let date = `${day}-${month}-${year}`;
     let url = `DBjs.php?t=8&d=${date}&user=${USER}&pass=${PASS}`;
-    await fetch(url);
+    await fetch(url)
+        .then(function(){
+            changeCalendar(currentMonth, currentYear);
+        });
 }
 
 async function getDate(year, month, day) {
@@ -139,7 +154,6 @@ async function getDate(year, month, day) {
         await updateAfspraakData(year, month, day);
         await updateOpeningstijdData(year, month, day);
     }
-    changeCalendar(currentMonth, currentYear);
     return 1;
 }
 // voer een fetch uit met get-variabelen om een openingstijd toe te voegen aan de db
@@ -160,33 +174,85 @@ async function addOpenRepeat(date, start, end, rType, rCount) {
     await fetch(url)
         .then(response => console.log(response.url));
 }
-// eventlistener aan openingstijd-add-knop
-function initAdder() {
-    document.getElementById('afpsraak-adder-btn').addEventListener("click", async function(){
-        let repeatCheckbox = document.getElementById('do-repeat');
-        let start = document.getElementById('time-start').value;
-        let end = document.getElementById('time-end').value;
-        let date = document.getElementById('time-date').value;
-        if (repeatCheckbox.checked) {
-            let repeatType = document.getElementById('time-repeat-type').value;
-            let repeatCount = document.getElementById('time-repeat-amount').value;
-            addOpenRepeat(date, start, end, repeatType, repeatCount);
-        }
-        else addOpen(date, start, end);
+
+// voert JS-fetch uit om nieuwe afspraak toe te voegen
+async function addPress(){
+    let repeatCheckbox = document.getElementById('do-repeat');
+    let start = document.getElementById('time-start').value;
+    let end = document.getElementById('time-end').value;
+    let date = document.getElementById('time-date').value;
+    if (repeatCheckbox.checked) {
+        let repeatType = document.getElementById('time-repeat-type').value;
+        let repeatCount = document.getElementById('time-repeat-amount').value;
+        await addOpenRepeat(date, start, end, repeatType, repeatCount);
+    }
+    else await addOpen(date, start, end);
+}
+
+// voeg of haal de deleter class weg bij alle datecells
+function updateErase() {
+    let eraser = document.getElementById('do-erase-label');
+    if (document.getElementById('do-erase').checked) {
+        eraser.classList.add('selected');
+        forEachDatecell(function(cell){
+            cell.classList.add('deleter');
+            cell.classList.remove('selected');
+        });
+    } else {
+        eraser.classList.remove('selected');
+        forEachDatecell(function(cell){
+            cell.classList.remove('deleter');
+        });
+    }
+
+    let overzichten = document.getElementsByClassName('overzicht');
+    for (let i = 0; i < overzichten.length; i++) {
+        overzichten[i].innerHTML = '';
+    }
+}
+
+// init eventlistener voor de gum
+function initErase() {
+    document.getElementById('do-erase').addEventListener('change', function(){
+        updateErase();
     });
 }
 
+// eventlistener aan openingstijd-add-knop
+function initAdder() {
+    document.getElementById('afpsraak-adder-btn').addEventListener("click", async function(){
+        await addPress()
+            .then(function(){
+                changeCalendar(currentMonth, currentYear);
+            });
+    });
+}
+
+// laat de repeat-afspraak div zien of niet op basis van de repeat knop
 function initRepeat() {
     let repeatCheckbox = document.getElementById('do-repeat');
     repeatCheckbox.addEventListener("change", function(){
         if (repeatCheckbox.checked) {
             document.getElementById('repeat-div').style.display = 'flex';
+            document.getElementById('do-repeat-label').classList.add('selected');
         }
         else {
             document.getElementById('repeat-div').style.display = 'none';
+            document.getElementById('do-repeat-label').classList.remove('selected');
         }});
 }
 
+function changeCalendar(month, year) {
+    let date = `1-${month+1}-${year}`;
+    let url = `DBjs.php?t=3&d=${date}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => renderCalendar(month, year, data))
+        .then(function(){updateErase()});
+}
+
 initAfspraken();
+initErase();
 initAdder();
 initRepeat();

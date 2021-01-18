@@ -17,12 +17,14 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
 </head>
 <body>
 <main>
-    <?= file_get_contents("Includes/html/calendar.html") ?>
+    <div id="kalendar-container">
+        <?= file_get_contents("Includes/html/calendar.html") ?>
 
-    <label for="do-erase"><i class="fas fa-eraser"></i></label>
-    <input type="checkbox" id="do-erase">
+        <label id="do-erase-label" for="do-erase"><i class="fas fa-eraser"></i></label>
+        <input type="checkbox" id="do-erase">
+    </div>
 
-    <div id="afspraak-adder">
+    <div id="afspraak-adder" class="adminComp">
         <div id="data-wrapper">
             <div id="adder-main">
                 <label>
@@ -59,6 +61,9 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
         <i class="fas fa-plus" id="afpsraak-adder-btn"></i>
 
     </div>
+    <div id="afspraak-confirmation">
+
+    </div>
 
     <div id="overzichten">
         <div id="afspraken" class="overzicht">
@@ -72,7 +77,7 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
 
 </main>
 <aside>
-    <div id="afspraak-overzicht">
+    <div id="afspraak-overzicht" class="adminComp">
         <div id="afspraak-pending">
             <h2>In Afwachting</h2>
             <div id="pending-content">
