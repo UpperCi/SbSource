@@ -128,6 +128,7 @@ if (isset($_GET['t'])) {
                     ':start' => $start,
                     ':end' => $end]);
             }
+            break;
         case 7: // voeg een herhalende timeslot toe
             if (checkLogin($connection, $_GET)) {
                 $start = intval($_GET['start']);
@@ -156,8 +157,8 @@ if (isset($_GET['t'])) {
                         break;
                     case 'm': // herhaal elke maand
                         foreach (range(0, $repeatCount - 1) as $i) {
-                            $newStart = date_add(date_create($start), date_interval_create_from_date_string("${$i} months"));
-                            $newEnd = date_add(date_create($end), date_interval_create_from_date_string("${$i} months"));
+                            $newStart = date_add(date_create($start), date_interval_create_from_date_string("{$i} months"));
+                            $newEnd = date_add(date_create($end), date_interval_create_from_date_string("{$i} months"));
                             $statement->execute([
                                 ':start' => $newStart,
                                 ':end' => $newEnd

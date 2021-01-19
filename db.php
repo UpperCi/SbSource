@@ -17,11 +17,8 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
 </head>
 <body>
 <main>
-    <div id="kalendar-container">
+    <div id="kalender-container">
         <?= file_get_contents("Includes/html/calendar.html") ?>
-
-        <label id="do-erase-label" for="do-erase"><i class="fas fa-eraser"></i></label>
-        <input type="checkbox" id="do-erase">
     </div>
 
     <div id="afspraak-adder" class="adminComp">
@@ -47,7 +44,7 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
                     <select id="time-repeat-type">
                         <option value="d">dag</option>
                         <option value="w">week</option>
-                        <!--                        <option value="m">maand</option>-->
+                                                <option value="m">maand</option>
                     </select>
                     <p class="time-desc">voor</p>
                     <input type="number" id="time-repeat-amount">
@@ -78,6 +75,7 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
 
 </main>
 <aside>
+    <?php if (count($pending) > 0): ?>
     <div id="afspraak-overzicht" class="adminComp">
         <div id="afspraak-pending">
             <h2>In Afwachting</h2>
@@ -89,6 +87,7 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
         </div>
 
     </div>
+    <?php endif; ?>
 </aside>
 
 

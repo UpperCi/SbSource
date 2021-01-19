@@ -1,14 +1,8 @@
 // update de status van een afspraak in de database
 function updateStatus(id, newStatus) {
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            console.log(`afspraak ${id} gezet naar status ${newStatus}`);
-        }
-    };
     let getUrl = `DBjs.php?t=4&user=${USER}&pass=${PASS}&id=${id}&status=${newStatus}`;
-    request.open("GET", getUrl, true);
-    request.send();
+    fetch(getUrl)
+        .then(function(){console.log(`afspraak ${id} gezet naar status ${newStatus}`);});
 }
 
 // geef de afspraak- accept en deny-knoppen functionaliteit
@@ -81,6 +75,10 @@ function updateAfspraken(af) {
     let afDiv = document.getElementById('afspraken');
     afDiv.innerHTML = "";
 
+    if (af.length > 0) {
+        document.getElementById("afspraken").appendChild(quickElement('h2', 'overzicht-desc', 'Afspraken'))
+    }
+
     for (let i = 0; i < af.length; i++) {
         createAfLink(af[i]);
     }
@@ -98,6 +96,9 @@ async function delDate(id) {
 
 function upDate(open) {
     document.getElementById("timeslot-overzicht").innerHTML = '';
+    if (open.length > 0) {
+        document.getElementById("timeslot-overzicht").appendChild(quickElement('h2', 'overzicht-desc', 'Openingstijden'))
+    }
 
     for (let i = 0; i < open.length; i++) {
         let t = open[i];
@@ -105,16 +106,16 @@ function upDate(open) {
 
         let cal = quickElement('div', 'cal-timeslot-in', '');
         cal.appendChild(quickElement('p', 'cal-timeslot-display', timePeriod));
-
+        let calDelContainer =   quickElement('a', 'timeslot-del', '');
+        calDelContainer.id = "open_" + t['id'];
         let calDel = quickElement('i', "far", '');
         calDel.classList.add('fa-trash-alt');
-        calDel.id = "open_" + t['id'];
         calDel.addEventListener('click', function () {
             delDate(calDel.id);
             cal.remove();
         })
-
-        cal.appendChild(calDel);
+        calDelContainer.appendChild(calDel);
+        cal.appendChild(calDelContainer);
 
         document.getElementById("timeslot-overzicht").appendChild(cal);
     }
@@ -243,7 +244,7 @@ function initRepeat() {
         }
     });
 }
-
+// overschreven om updateErase aan het einde toe te voegen
 function changeCalendar(month, year) {
     let date = `1-${month + 1}-${year}`;
     let url = `DBjs.php?t=3&d=${date}`;
@@ -256,6 +257,16 @@ function changeCalendar(month, year) {
         });
 }
 
+// gum moet aan de bovenkant komen
+function initCalEraser() {
+    let calHeader = document.getElementById('kalender-header');
+    const eraser = "<label id='do-erase-label' for='do-erase'><i class='fas fa-eraser'></i></label><input type='checkbox' id='do-erase'>";
+    let tempHTML = calHeader.innerHTML;
+    calHeader.innerHTML = tempHTML + eraser;
+    console.log('ja');
+}
+
+initCalEraser();
 initAfspraken();
 initErase();
 initAdder();

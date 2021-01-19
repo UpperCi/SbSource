@@ -31,7 +31,8 @@ function quickAfspraakHTML($af): string
     $id = 'afs_' . $af['id'];
     $afHTML = "<div class='afspraak' id='{$id}'>";
     if (isset($af['email'])) {
-        $afHTML .= "<a class='afspraak-email'>{$af['email']}</a>";
+        $email = htmlentities($af['email']);
+        $afHTML .= "<a class='afspraak-email' href='mailto:{$email}'><i class='far fa-envelope'></i></a>";
     }
     if (isset($af['start']) && isset($af['end'])) {
         $startStr = date("H:i", $af['start']);

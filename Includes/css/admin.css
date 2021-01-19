@@ -13,6 +13,10 @@ aside {
     flex: 1;
 }
 
+h2 {
+    margin-top: 0;
+}
+
 .overzicht {
     flex: 1;
     border-radius: 1rem;
@@ -20,42 +24,62 @@ aside {
     margin: 1rem;
 }
 
-.adminComp, #kalendar-container {
+.adminComp, #kalender-container {
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
     border-radius: 1rem;
     padding: 2rem;
 }
 
-.afspraak-overzicht-container {
+.cal-timeslot-in {
+    display: inline-flex;
+}
+
+.cal-timeslot-display, .afspraak-periode {
+    flex: 4;
+}
+
+.timeslot-del {
+    cursor: pointer;
+    text-align: right;
+}
+
+.afspraak-overzicht-container, .cal-timeslot-in {
     font-family: 'Roboto', sans-serif;
-    background-color: var(--higlight-color);
-    width: -moz-max-content;
-    width: max-content;
-    min-width: 75%;
+    background-color: var(--higlight-color-light);
+    min-width: 100%;
     height: fit-content;
     margin: 1rem auto;
     padding: 1rem;
     border-radius: 0.5rem;
+    display: inline-flex;
 }
 
-.afspraak-periode, .afspraak-email, .afspraak-link {
-    margin: 0.5rem 0.2rem;
-    color: white;
+.afspraak-periode, .afspraak-email, .afspraak-link, .timeslot-del, .cal-timeslot-display {
+    margin: 0.5rem;
     font-size: var(--font-med);
-
 }
 
-.afspraak-email, .afspraak-link {
-    color: rgba(255, 255, 255, 0.8);
-    transition: color 0.2s;
+.afspraak-email, .afspraak-link, .timeslot-del {
+    color: rgba(0, 0, 128, 0.7);
+    transition: all 0.2s;
 }
 
-.afspraak-email:hover, .afspraak-link:hover {
+.afspraak-email:hover, .afspraak-link:hover, .timeslot-del:hover {
+    color: rgb(0,0,128);
+}
+
+.cal-timeslot-in {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.overzicht-desc {
     color: white;
-}
-
-h2 {
-    margin-top: 0;
+    font-size: var(--font-large);
+    font-family: 'Robot', sans-serif;
+    text-align: -moz-center;
+    text-align: center;
+    margin-bottom: 0;
+    text-shadow: 0 4px 6px rgba(0,0,0,0.4);
 }
 
 #afspraak-adder {
@@ -143,7 +167,7 @@ h2 {
     background-color: var(--higlight-color-dark);
 }
 
-#kalendar-container {
+#kalender-container {
     background-color: white;
     width: -moz-fit-content;
     width: fit-content;
@@ -174,6 +198,18 @@ h2 {
     height: fit-content;
     width: -moz-fit-content;
     width: fit-content;
+}
+
+#kalender-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#kalender-date-desc {
+    flex: 1;
+    align-self: flex-end;
+    margin: auto;
 }
 
 .time-desc, #time-repeat-type, #time-repeat-amount, #do-repeat-label {
@@ -214,8 +250,32 @@ h2 {
     padding: 0.2rem 0.5rem;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1000px) {
     body {
         display: block;
+    }
+    #afspraak-overzicht {
+        border-radius: 1rem;
+        background-color: white;
+
+        height: fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+        margin: 1rem auto;
+        float: none;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    #overzichten {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 620px) {
+    :root {
+        --font-large: 26px;
+        --font-med: 20px;
+        --font-small: 16px;
     }
 }

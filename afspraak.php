@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
 <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    <div id="kalendar-container">
+    <div id="kalender-container">
         <?= file_get_contents("Includes/html/calendar.html") ?>
     </div>
     <h2 id="afspraak-selected-date"></h2>

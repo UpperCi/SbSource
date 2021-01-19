@@ -51,7 +51,7 @@ input:disabled {
     transition: background-color 0.3s, border-radius 0.7s;
 }
 
-#kalendar-container {
+#kalender-container {
     display: flex;
 }
 
