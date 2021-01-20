@@ -51,6 +51,10 @@ input:disabled {
     transition: background-color 0.3s, border-radius 0.7s;
 }
 
+#afspraak-selected-date {
+    font-family: 'Roboto Slab', serif;
+}
+
 #kalender-container {
     display: flex;
 }

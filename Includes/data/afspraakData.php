@@ -30,14 +30,14 @@ function quickAfspraakHTML($af): string
 {
     $id = 'afs_' . $af['id'];
     $afHTML = "<div class='afspraak' id='{$id}'>";
-    if (isset($af['email'])) {
-        $email = htmlentities($af['email']);
-        $afHTML .= "<a class='afspraak-email' href='mailto:{$email}'><i class='far fa-envelope'></i></a>";
-    }
     if (isset($af['start']) && isset($af['end'])) {
         $startStr = date("H:i", $af['start']);
         $endStr = date("H:i", $af['end']);
         $afHTML .= "<p class='afspraak-tijd'>{$startStr} - {$endStr}</p>";
+    }
+    if (isset($af['email'])) {
+        $email = htmlentities($af['email']);
+        $afHTML .= "<a class='afspraak-email' href='mailto:{$email}'><i class='far fa-envelope'></i></a>";
     }
     $afHTML .= "<input type='button' class='afspraak-accept' value='accepteren'>
                 <input type='button' class='afspraak-deny' value='weigeren'>

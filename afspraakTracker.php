@@ -42,8 +42,8 @@ $ICSurl = createAfspraakICS($connection, $info);
                 <p>Tel</p>
             </div>
             <div>
-                <p><?= $info['email'] ?></p>
-                <p><?= $info['tel'] ?></p>
+                <p><?= htmlentities($info['email']) ?></p>
+                <p><?= htmlentities($info['tel']) ?></p>
             </div>
         </div>
         <div id="afspraak-download">

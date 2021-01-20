@@ -17,6 +17,27 @@ h2 {
     margin-top: 0;
 }
 
+.afspraak {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.afspraak-tijd {
+    width: calc(100% - 4rem);
+    font-size: var(--font-med);
+    margin: 0.2rem 0;
+    align-self: center;
+}
+
+.afspraak-email i {
+    font-size: var(--font-large);
+}
+
+.afspraak input {
+    width: calc(50% - 2rem);
+    margin: 0 1rem;
+}
+
 .overzicht {
     flex: 1;
     border-radius: 1rem;
@@ -87,7 +108,6 @@ h2 {
     width: -moz-fit-content;
     width: fit-content;
     margin: 1rem auto;
-
 
     background-color: var(--higlight-color-light);
 }

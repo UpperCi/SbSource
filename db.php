@@ -44,7 +44,6 @@ $pending = afspraakAssoc($connection, 0); // afspraken die nog geen definitieve 
                     <select id="time-repeat-type">
                         <option value="d">dag</option>
                         <option value="w">week</option>
-                                                <option value="m">maand</option>
                     </select>
                     <p class="time-desc">voor</p>
                     <input type="number" id="time-repeat-amount">
